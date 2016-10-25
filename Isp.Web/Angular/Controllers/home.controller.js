@@ -5,18 +5,30 @@
         .module('app')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['homeService'];
+    HomeController.$inject = ['homeService', 'commonFactory'];
 
-    function HomeController(homeService) {
+    function HomeController(homeService, commonFactory) {
         var vm = this;
 
-        test();
+        vm.model = {};
+        vm.isBusy = false;
+        vm.startProcedure = startProcedure;
 
-        function test() {
-            var xd;
-            homeService.getGoogleImages()
+        ////////////////////
+
+        function startProcedure() {
+            if (typeof vm.model.query !== 'string' || !vm.model.query) {
+                commonFactory.showInfo(
+                    'Please provide the keywords which describe best the sought images',
+                    'Empty query');
+
+                return;
+            }
+
+            vm.isBusy = true;
+            homeService.getGoogleImages('test')
                 .then(function(resp) {
-                    xd = resp;
+                    vm.isBusy = false;
                     console.log('OK');
                 });
         }

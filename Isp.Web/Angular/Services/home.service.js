@@ -17,16 +17,27 @@
 
         return service;
 
-        function getGoogleImages() {
-            return $http.get(root + paths.getGoogleImages)
-                .then(function(resp) {
-                    return resp.data;
+        ////////////////////
+
+        function getGoogleImages(query) {
+            return $http.get(root + paths.getGoogleImages, {
+                    params: { query: query }
                 })
-                .catch(function(err) {
-                    commonFactory.showError();
-                    console.log(err);
-                    return $q.reject();
-                });
+                .then(requestSuccess)
+                .catch(requestFailure);
+        }
+
+        ////////////////////
+
+        function requestSuccess(response) {
+            return response.data;
+        }
+
+        function requestFailure(error) {
+            commonFactory.showError();
+            console.log(error);
+
+            return $q.reject(error);
         }
     }
 })();

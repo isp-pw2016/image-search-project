@@ -19,12 +19,12 @@ namespace Isp.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetGoogleImages()
+        public ActionResult GetGoogleImages(string query)
         {
             var result = new
             {
                 Amount = 12345,
-                Message = "Test"
+                Message = query
             };
 
             return new JsonNetResult(result);

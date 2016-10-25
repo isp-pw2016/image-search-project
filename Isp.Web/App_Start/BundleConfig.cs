@@ -18,7 +18,6 @@ namespace Isp.Web
 
             bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
                 "~/Scripts/angular.js",
-                "~/Scripts/angular-animate.js",
                 "~/Scripts/toaster.js",
                 "~/Angular/app.module.js",
                 "~/Angular/constants.js",
