@@ -18,7 +18,10 @@ namespace Isp.Web
 
             bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
                 "~/Scripts/angular.js",
-                "~/Scripts/angular-mocks.js"));
+                "~/Scripts/angular-mocks.js",
+                "~/Angular/app.module.js",
+                "~/Angular/Controllers/controller.js",
+                "~/Angular/Controllers/home.controller.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",

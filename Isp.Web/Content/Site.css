@@ -21,7 +21,7 @@
 
 .loader {
     margin: 60px auto;
-    font-size: 8px;
+    font-size: 10px;
     position: relative;
     text-indent: -9999em;
     border-top: 1.1em solid rgba(150,150,150, 0.2);
@@ -34,6 +34,12 @@
     -webkit-animation: load8 1.1s infinite linear;
     animation: load8 1.1s infinite linear;
     content: "";
+}
+
+.loader-sm {
+    margin: 30px auto !important;
+    font-size: 5px !important;
+    border-width: 1.5em !important;
 }
 
 @-webkit-keyframes load8 {
@@ -60,10 +66,19 @@
     }
 }
 
-.p-20 {
+.navbar-large {
     padding: 20px !important;
 }
 
-.p-t-80 {
+.container-overhead {
     padding-top: 80px !important;
+}
+
+.thumb {
+    margin-bottom: 30px;
+}
+
+.thumbnail img {
+    width: 400px;
+    height: 200px;
 }
