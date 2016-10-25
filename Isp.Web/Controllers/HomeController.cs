@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Isp.Core.ImageFetchers;
+using Isp.Web.Serializers;
 
 namespace Isp.Web.Controllers
 {
@@ -14,8 +15,19 @@ namespace Isp.Web.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.Xd = Url.Action("Index", "Home");
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult GetGoogleImages()
+        {
+            var result = new
+            {
+                Amount = 12345,
+                Message = "Test"
+            };
+
+            return new JsonNetResult(result);
         }
     }
 }

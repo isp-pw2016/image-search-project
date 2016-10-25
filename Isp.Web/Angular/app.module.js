@@ -2,8 +2,8 @@
     'use strict';
 
     angular
-        .module('app',
-        [
-            'controllers'
+        .module('app', [
+            'ngAnimate',
+            'toaster'
         ]);
 })();
