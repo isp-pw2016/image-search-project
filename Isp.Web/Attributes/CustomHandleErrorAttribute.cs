@@ -6,6 +6,13 @@ namespace Isp.Web.Attributes
 {
     public class CustomHandleErrorAttribute : HandleErrorAttribute
     {
+        /// <summary>
+        /// Custom HandleErrorAttribute to return exceptions in controllers
+        /// 
+        /// If the request in an Ajax request, respond with a JSON message
+        /// Otherwise respond with a ViewResult
+        /// </summary>
+        /// <param name="filterContext">Context of the exception</param>
         public override void OnException(ExceptionContext filterContext)
         {
             if (filterContext.ExceptionHandled || !filterContext.HttpContext.IsCustomErrorEnabled)

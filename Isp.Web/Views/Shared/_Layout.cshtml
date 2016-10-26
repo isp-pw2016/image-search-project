@@ -35,10 +35,12 @@
     <div class="container container-overhead body-content">
         @RenderBody()
     </div>
+    
+    @Html.Partial("Constants")
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/angularjs")
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/angularjs")
 </body>
 </html>

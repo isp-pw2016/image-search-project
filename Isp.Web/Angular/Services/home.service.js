@@ -5,11 +5,10 @@
         .module('app')
         .service('homeService', homeService);
 
-    homeService.inject = ['$http', '$q', 'constants', 'commonFactory'];
+    homeService.inject = ['$http', '$q', '$window', 'commonFactory'];
 
-    function homeService($http, $q, constants, commonFactory) {
-        var root = constants.root;
-        var paths = constants.paths;
+    function homeService($http, $q, $window, commonFactory) {
+        var paths = $window.constants.paths;
 
         var service = {
             getGoogleImages: getGoogleImages
@@ -20,7 +19,7 @@
         ////////////////////
 
         function getGoogleImages(query) {
-            return $http.get(root + paths.getGoogleImages, {
+            return $http.get(paths.getGoogleImages, {
                     params: { query: query }
                 })
                 .then(requestSuccess)

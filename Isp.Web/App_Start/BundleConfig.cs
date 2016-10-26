@@ -20,7 +20,6 @@ namespace Isp.Web
                 "~/Scripts/angular.js",
                 "~/Scripts/toaster.js",
                 "~/Angular/app.module.js",
-                "~/Angular/constants.js",
                 "~/Angular/Controllers/home.controller.js",
                 "~/Angular/Factories/common.factory.js",
                 "~/Angular/Services/home.service.js"));
