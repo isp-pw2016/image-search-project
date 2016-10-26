@@ -11,6 +11,7 @@
         var vm = this;
 
         vm.model = {};
+        vm.results = {};
         vm.isBusy = false;
         vm.startProcedure = startProcedure;
 
@@ -25,11 +26,14 @@
                 return;
             }
 
+            vm.results = {};
             vm.isBusy = true;
-            homeService.getGoogleImages('test')
+
+            homeService.getGoogleImages(vm.model.query)
                 .then(function(resp) {
                     vm.isBusy = false;
-                    console.log('OK');
+                    vm.results.google = resp;
+                    console.log('getGoogleImages: OK // ' + vm.results.google.timeString);
                 });
         }
     }

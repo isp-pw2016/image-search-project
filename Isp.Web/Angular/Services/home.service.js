@@ -18,10 +18,14 @@
 
         ////////////////////
 
-        function getGoogleImages(query) {
-            return $http.get(paths.getGoogleImages, {
-                    params: { query: query }
-                })
+        function getGoogleImages(query, skip, take) {
+            var model = {
+                query: query,
+                skip: skip,
+                take: take
+            };
+
+            return $http.get(paths.getGoogleImages, { params: model })
                 .then(requestSuccess)
                 .catch(requestFailure);
         }

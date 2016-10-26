@@ -1,5 +1,6 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
+using Isp.Core.Entities;
 using Isp.Core.ImageFetchers;
 using Isp.Web.Serializers;
 
@@ -20,13 +21,9 @@ namespace Isp.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetGoogleImages(string query)
+        public async Task<ActionResult> GetGoogleImages(ImageFetchQuery model)
         {
-            var result = new
-            {
-                Amount = 12345,
-                Message = query
-            };
+            var result = await _googleImageFetch.Execute(model);
 
             return new JsonNetResult(result);
         }

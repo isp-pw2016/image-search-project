@@ -12,9 +12,13 @@
     <title>Image Search Project</title>
 
     @Styles.Render("~/Content/css")
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/angularjs")
 </head>
-<body ng-app="app">
+<body ng-app="app" ng-cloak>
     <div class="navbar navbar-default navbar-fixed-top navbar-large">
         <div class="container">
             <div class="navbar-header">
@@ -38,9 +42,6 @@
     
     @Html.Partial("Constants")
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-    @Scripts.Render("~/bundles/angularjs")
 </body>
 </html>

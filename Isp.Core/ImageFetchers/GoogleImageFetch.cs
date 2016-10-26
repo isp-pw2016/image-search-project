@@ -13,6 +13,12 @@ namespace Isp.Core.ImageFetchers
     /// 
     /// Implementation of the image fetching via the Google's API using a client library
     /// created by Google: Google.Apis.Customsearch.v1.17.0.466
+    /// 
+    /// Attention:
+    /// - API allows up to 10 items per request, skipping starts from one
+    /// - Custom Search Engine must be configured in the following way:
+    /// --- "Sites to search" set to "Search the entire web but emphasise included sites"
+    /// --- "Image search" set to "On"
     /// </summary>
     public class GoogleImageFetch : ImageFetchBase
     {
@@ -26,11 +32,18 @@ namespace Isp.Core.ImageFetchers
 
             request.Cx = _engineId;
             request.SearchType = CseResource.ListRequest.SearchTypeEnum.Image;
-            request.Start = model.Skip;
-            request.Num = model.Take;
+            
+            if (model.Skip.HasValue)
+            {
+                request.Start = Math.Min(model.Skip.Value, 1);
+            }
+
+            if (model.Take.HasValue)
+            {
+                request.Num = Math.Max(model.Take.Value, 10);
+            }
 
             var search = await request.ExecuteAsync();
-
             if (search?.Items == null)
             {
                 throw new Exception($"Query '{model.Query}' returned no results");
@@ -38,7 +51,11 @@ namespace Isp.Core.ImageFetchers
 
             var result = new ImageFetchResult
             {
-
+                ImageItems = search.Items.Select(i => new ImageItem
+                {
+                    Link = i.Link,
+                    Title = i.Title
+                }),
                 TotalCount = search.SearchInformation.TotalResults ?? search.Items.Count
             };
 
