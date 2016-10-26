@@ -2,6 +2,7 @@
 using System.Text;
 using System.Web.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Isp.Web.Serializers
 {
@@ -21,7 +22,10 @@ namespace Isp.Web.Serializers
         public JsonNetResult(object data)
         {
             Data = data;
-            SerializerSettings = new JsonSerializerSettings();
+            SerializerSettings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
             Formatting = Formatting.Indented;
         }
 

@@ -5,12 +5,15 @@
         .module('app')
         .factory('commonFactory', commonFactory);
 
-    commonFactory.inject = ['$timeout', 'toaster'];
+    commonFactory.inject = ['$q', '$timeout', 'toaster'];
 
-    function commonFactory($timeout, toaster) {
+    function commonFactory($q, $timeout, toaster) {
         var factory = {
             showError: showError,
-            showInfo: showInfo
+            showInfo: showInfo,
+            isObject: isObject,
+            requestSuccess: requestSuccess,
+            requestFailure: requestFailure
         };
 
         return factory;
@@ -31,6 +34,26 @@
 
         function showInfo(message, caption) {
             showError(message, caption, 'info');
+        }
+
+        function isObject(obj) {
+            return typeof obj === 'object' && obj !== null;
+        }
+
+        function requestSuccess(response) {
+            return response.data;
+        }
+
+        function requestFailure(error) {
+            var message = '';
+            if (isObject(error) && isObject(error.data) && error.data.message.length) {
+                message = error.data.message;
+            }
+
+            showError(message);
+            console.log(error);
+
+            return $q.reject(error);
         }
     }
 })();

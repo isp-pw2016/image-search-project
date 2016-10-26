@@ -30,14 +30,11 @@
         ////////////////////
 
         function requestSuccess(response) {
-            return response.data;
+            return commonFactory.requestSuccess(response);
         }
 
         function requestFailure(error) {
-            commonFactory.showError();
-            console.log(error);
-
-            return $q.reject(error);
+            return commonFactory.requestFailure(error);
         }
     }
 })();

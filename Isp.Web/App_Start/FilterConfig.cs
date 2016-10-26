@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Isp.Web.Attributes;
 
 namespace Isp.Web
 {
@@ -6,7 +7,7 @@ namespace Isp.Web
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new CustomHandleErrorAttribute());
         }
     }
 }
