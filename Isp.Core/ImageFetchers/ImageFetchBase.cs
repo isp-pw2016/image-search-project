@@ -35,7 +35,7 @@ namespace Isp.Core.ImageFetchers
             return new BenchmarkResult
             {
                 ImageFetch = imageFetchResult,
-                Time = stopwatch.ElapsedTicks / StopwatchFrequency
+                Stopwatch = stopwatch.ElapsedTicks / StopwatchFrequency
             };
         }
     }

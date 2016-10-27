@@ -1,4 +1,6 @@
-﻿using Isp.Core.Extensions;
+﻿using System;
+using Isp.Core.Extensions;
+using Newtonsoft.Json;
 
 namespace Isp.Core.Entities
 {
@@ -6,7 +8,10 @@ namespace Isp.Core.Entities
     {
         public ImageFetchResult ImageFetch { get; set; }
 
-        public double Time { get; set; }
+        [JsonIgnore]
+        public double Stopwatch { get; set; }
+
+        public double Time => Math.Round(Stopwatch, 6);
 
         public string TimeString => Time.ToTimeString();
     }

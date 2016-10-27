@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Isp.Core.Extensions;
 
 namespace Isp.Core.Entities
 {
@@ -7,5 +8,9 @@ namespace Isp.Core.Entities
         public IEnumerable<ImageItem> ImageItems { get; set; }
 
         public long TotalCount { get; set; }
+
+        public double? Time { get; set; }
+
+        public string TimeString => Time.ToTimeString();
     }
 }

@@ -26,8 +26,7 @@
             };
 
             return $http.get(paths.getGoogleImages, { params: model })
-                .then(requestSuccess)
-                .catch(requestFailure);
+                .then(requestSuccess, requestFailure);
         }
 
         ////////////////////
