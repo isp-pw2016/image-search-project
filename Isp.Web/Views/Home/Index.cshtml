@@ -4,7 +4,7 @@
             <div class="input-group input-group-lg">
                 <input ng-model="vm.model.query" type="text" class="form-control" placeholder="Search for images...">
                 <span class="input-group-btn">
-                    <button ng-click="vm.startProcedure()" ng-disabled="vm.isBusy" class="btn btn-default" type="button">
+                    <button ng-click="vm.startProcedure()" ng-disabled="vm.isBusy" class="btn btn-primary" type="button">
                         Start the test
                     </button>
                 </span>
@@ -37,7 +37,7 @@
                     (<span ng-bind="vm.results.google.imageFetch.time"></span>)
                 </div>
             </div>
-            <div class="panel-body">
+            <div class="panel-body p-b-5">
                 <p ng-if="vm.results.google.imageFetch.totalCount === 0">
                     No images found.
                 </p>

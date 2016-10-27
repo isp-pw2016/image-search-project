@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Google.Apis.Customsearch.v1;
 using Google.Apis.Services;
 using Isp.Core.Entities;
+using Isp.Core.Exceptions;
 
 namespace Isp.Core.ImageFetchers
 {
     /// <summary>
     /// Google Custom Search
+    /// https://developers.google.com/custom-search/docs/overview
     /// 
     /// Implementation of the image fetching via the Google's API using a client library
     /// created by Google: Google.Apis.Customsearch.v1.17.0.466
@@ -37,7 +39,7 @@ namespace Isp.Core.ImageFetchers
             request.Cx = _engineId;
             request.SearchType = CseResource.ListRequest.SearchTypeEnum.Image;
             request.Fields = "items(link,title),searchInformation";
-            
+
             if (model.Skip.HasValue)
             {
                 request.Start = Math.Min(model.Skip.Value, 1);
@@ -49,20 +51,20 @@ namespace Isp.Core.ImageFetchers
             }
 
             var search = await request.ExecuteAsync();
-            if (search?.Items == null)
+            if (search == null)
             {
-                throw new Exception($"Query '{model.Query}' returned no results");
+                throw new ImageFetchException("Query returned empty response", "Google Custom Search");
             }
 
             var result = new ImageFetchResult
             {
-                ImageItems = search.Items.Select(i => new ImageItem
+                ImageItems = search.Items?.Select(i => new ImageItem
                 {
                     Link = i.Link,
                     Title = i.Title
                 }),
-                TotalCount = search.SearchInformation.TotalResults ?? search.Items.Count,
-                Time = search.SearchInformation.SearchTime
+                TotalCount = search.SearchInformation.TotalResults ?? search.Items?.Count ?? 0,
+                Time = search.SearchInformation.SearchTime ?? default(double)
             };
 
             return result;

@@ -20,13 +20,13 @@
 
         ////////////////////
 
-        function showError(message, caption, type) {
+        function showError(message, title, type) {
             $timeout(function() {
                 toaster.pop({
                     type: type || 'error',
-                    title: caption || 'Error',
+                    title: title || 'Error',
                     body: message || 'Was getting caught part of your plan?',
-                    timeout: 10000,
+                    timeout: 8000,
                     showCloseButton: false
                 });
             }, 0);
@@ -46,11 +46,18 @@
 
         function requestFailure(error) {
             var message = '';
-            if (isObject(error) && isObject(error.data) && error.data.message.length) {
-                message = error.data.message;
+            var title = '';
+
+            if (isObject(error) && isObject(error.data)) {
+                if (error.data.message.length) {
+                    message = error.data.message;
+                }
+                if (error.data.title.length) {
+                    title = error.data.title;
+                }
             }
 
-            showError(message);
+            showError(message, title);
             console.log(error);
 
             return $q.reject(error);

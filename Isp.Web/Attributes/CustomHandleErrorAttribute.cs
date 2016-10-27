@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using Isp.Core.Exceptions;
 using Isp.Web.Serializers;
 
 namespace Isp.Web.Attributes
@@ -7,10 +8,10 @@ namespace Isp.Web.Attributes
     public class CustomHandleErrorAttribute : HandleErrorAttribute
     {
         /// <summary>
-        /// Custom HandleErrorAttribute to return exceptions in controllers
+        /// Custom HandleErrorAttribute to return exceptions in controllers.
         /// 
-        /// If the request in an Ajax request, respond with a JSON message
-        /// Otherwise respond with a ViewResult
+        /// If the request in an Ajax request, respond with a JSON message.
+        /// Otherwise respond with a ViewResult.
         /// </summary>
         /// <param name="filterContext">Context of the exception</param>
         public override void OnException(ExceptionContext filterContext)
@@ -32,14 +33,23 @@ namespace Isp.Web.Attributes
 
             if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
-                var response = !string.IsNullOrWhiteSpace(filterContext.Exception.Message)
-                    ? filterContext.Exception.Message
-                    : "An error has occurred";
+                var title = string.Empty;
+                var message = filterContext.Exception.Message;
+
+                if (filterContext.Exception is ImageFetchException)
+                {
+                    title = ((ImageFetchException) filterContext.Exception).Title;
+                }
 
                 filterContext.Result = new JsonNetResult(new
                 {
                     Error = true,
-                    Message = response
+                    Title = !string.IsNullOrWhiteSpace(title)
+                        ? title
+                        : "Error",
+                    Message = !string.IsNullOrWhiteSpace(message)
+                        ? message
+                        : "An error has occurred"
                 });
             }
             else
