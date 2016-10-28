@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Isp.Core.Entities.Jsons
+namespace Isp.Core.Entities.Jsons.Bing
 {
     public class BingJson
     {

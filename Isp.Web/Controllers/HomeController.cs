@@ -10,14 +10,17 @@ namespace Isp.Web.Controllers
     {
         private readonly GoogleImageFetch _googleImageFetch;
         private readonly BingImageFetch _bingImageFetch;
+        private readonly InstagramImageFetch _instagramImageFetch;
 
         public HomeController(
             GoogleImageFetch googleImageFetch,
-            BingImageFetch bingImageFetch
+            BingImageFetch bingImageFetch,
+            InstagramImageFetch instagramImageFetch
         )
         {
             _googleImageFetch = googleImageFetch;
             _bingImageFetch = bingImageFetch;
+            _instagramImageFetch = instagramImageFetch;
         }
 
         public ActionResult Index()
@@ -37,6 +40,14 @@ namespace Isp.Web.Controllers
         public async Task<ActionResult> GetBingImages(ImageFetchQuery model)
         {
             var result = await _bingImageFetch.Execute(model);
+
+            return new JsonNetResult(result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetInstagramImages(ImageFetchQuery model)
+        {
+            var result = await _instagramImageFetch.Execute(model);
 
             return new JsonNetResult(result);
         }

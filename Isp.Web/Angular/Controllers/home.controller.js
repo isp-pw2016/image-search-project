@@ -34,12 +34,14 @@
 
             var googlePromise = homeService.getGoogleImages(vm.model);
             var bingPromise = homeService.getBingImages(vm.model);
+            var instagramPromise = homeService.getInstagramImages(vm.model);
 
-            $q.all([googlePromise, bingPromise])
+            $q.all([googlePromise, bingPromise, instagramPromise])
                 .then(function(responses) {
                     vm.results = {
                         google: responses[0],
-                        bing: responses[1]
+                        bing: responses[1],
+                        instagram: responses[2]
                     };
                 })
                 .finally(function () {

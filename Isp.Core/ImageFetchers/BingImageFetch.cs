@@ -5,14 +5,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using Isp.Core.Entities;
-using Isp.Core.Entities.Jsons;
+using Isp.Core.Entities.Jsons.Bing;
 using Isp.Core.Exceptions;
 using Newtonsoft.Json;
 
 namespace Isp.Core.ImageFetchers
 {
     /// <summary>
-    /// Bing Image Search
+    /// Bing Image Search v5
     /// https://microsoft.com/cognitive-services/en-us/bing-image-search-api
     /// 
     /// Implementation of the image fetching via the Bing's API using web requests

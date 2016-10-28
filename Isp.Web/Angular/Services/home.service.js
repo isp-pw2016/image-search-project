@@ -12,7 +12,8 @@
 
         var service = {
             getGoogleImages: getGoogleImages,
-            getBingImages: getBingImages
+            getBingImages: getBingImages,
+            getInstagramImages: getInstagramImages
         };
 
         return service;
@@ -25,6 +26,10 @@
 
         function getBingImages(model) {
             return getImages(paths.getBingImages, model);
+        }
+
+        function getInstagramImages(model) {
+            return getImages(paths.getInstagramImages, model);
         }
 
         ////////////////////

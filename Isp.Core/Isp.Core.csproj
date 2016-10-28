@@ -75,10 +75,12 @@
     <Compile Include="Entities\ImageFetchResult.cs" />
     <Compile Include="Entities\ImageFetchQuery.cs" />
     <Compile Include="Entities\ImageItem.cs" />
-    <Compile Include="Entities\Jsons\BingJson.cs" />
+    <Compile Include="Entities\Jsons\Bing\BingJson.cs" />
+    <Compile Include="Entities\Jsons\Instagram\InstagramJson.cs" />
     <Compile Include="Exceptions\ImageFetchException.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
     <Compile Include="ImageFetchers\BingImageFetch.cs" />
+    <Compile Include="ImageFetchers\InstagramImageFetch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ImageFetchers\ImageFetchBase.cs" />
     <Compile Include="ImageFetchers\GoogleImageFetch.cs" />
