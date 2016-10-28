@@ -16,7 +16,7 @@ namespace Isp.Core.ImageFetchers
     /// Implementation of the image fetching via the Google's API using a client library
     /// created by Google: Google.Apis.Customsearch.v1.17.0.466
     /// 
-    /// Free but with a daily limit of 100 requests
+    /// Free but with a daily limit of 100 transactions
     /// 
     /// Attention:
     /// - API allows up to 10 items per request, skipping starts from one
@@ -28,6 +28,7 @@ namespace Isp.Core.ImageFetchers
     /// </summary>
     public class GoogleImageFetch : ImageFetchBase
     {
+        private const string _name = "Google Custom Search";
         private readonly string _apiKey = ConfigurationManager.AppSettings["GoogleCustomSearchApiKey"];
         private readonly string _engineId = ConfigurationManager.AppSettings["GoogleCustomSearchEngineId"];
 
@@ -42,18 +43,18 @@ namespace Isp.Core.ImageFetchers
 
             if (model.Skip.HasValue)
             {
-                request.Start = Math.Min(model.Skip.Value, 1);
+                request.Start = Math.Max(model.Skip.Value, 1);
             }
 
             if (model.Take.HasValue)
             {
-                request.Num = Math.Max(model.Take.Value, 10);
+                request.Num = Math.Min(model.Take.Value, 10);
             }
 
             var search = await request.ExecuteAsync();
             if (search == null)
             {
-                throw new ImageFetchException("Query returned empty response", "Google Custom Search");
+                throw new ImageFetchException("Query returned empty response", _name);
             }
 
             var result = new ImageFetchResult

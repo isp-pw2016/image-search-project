@@ -58,6 +58,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -74,8 +75,10 @@
     <Compile Include="Entities\ImageFetchResult.cs" />
     <Compile Include="Entities\ImageFetchQuery.cs" />
     <Compile Include="Entities\ImageItem.cs" />
+    <Compile Include="Entities\Jsons\BingJson.cs" />
     <Compile Include="Exceptions\ImageFetchException.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
+    <Compile Include="ImageFetchers\BingImageFetch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ImageFetchers\ImageFetchBase.cs" />
     <Compile Include="ImageFetchers\GoogleImageFetch.cs" />

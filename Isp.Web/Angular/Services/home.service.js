@@ -11,25 +11,28 @@
         var paths = $window.constants.paths;
 
         var service = {
-            getGoogleImages: getGoogleImages
+            getGoogleImages: getGoogleImages,
+            getBingImages: getBingImages
         };
 
         return service;
 
         ////////////////////
 
-        function getGoogleImages(query, skip, take) {
-            var model = {
-                query: query,
-                skip: skip,
-                take: take
-            };
+        function getGoogleImages(model) {
+            return getImages(paths.getGoogleImages, model);
+        }
 
-            return $http.get(paths.getGoogleImages, { params: model })
-                .then(requestSuccess, requestFailure);
+        function getBingImages(model) {
+            return getImages(paths.getBingImages, model);
         }
 
         ////////////////////
+
+        function getImages(path, model) {
+            return $http.get(path, { params: model })
+                .then(requestSuccess, requestFailure);
+        }
 
         function requestSuccess(response) {
             return commonFactory.requestSuccess(response);

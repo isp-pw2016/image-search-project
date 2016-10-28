@@ -5,21 +5,21 @@
         .module('app')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['homeService', 'commonFactory'];
+    HomeController.$inject = ['$q', 'homeService', 'commonFactory'];
 
-    function HomeController(homeService, commonFactory) {
+    function HomeController($q, homeService, commonFactory) {
         var vm = this;
 
         vm.model = {};
         vm.results = {};
-        vm.isPresent = {};
+        vm.isInitialised = false;
         vm.isBusy = false;
         vm.startProcedure = startProcedure;
 
         ////////////////////
 
         function startProcedure() {
-            if (typeof vm.model.query !== 'string' || !vm.model.query) {
+            if (typeof vm.model.query !== 'string' || vm.model.query.length === 0) {
                 commonFactory.showInfo(
                     'Please provide the keywords which describe best the sought images',
                     'Empty query');
@@ -29,12 +29,21 @@
 
             vm.isBusy = true;
 
-            homeService.getGoogleImages(vm.model.query)
-                .then(function(resp) {
-                    vm.isPresent.google = true;
-                    vm.results.google = resp;
+            vm.model.skip = 0;
+            vm.model.take = 10;
+
+            var googlePromise = homeService.getGoogleImages(vm.model);
+            var bingPromise = homeService.getBingImages(vm.model);
+
+            $q.all([googlePromise, bingPromise])
+                .then(function(responses) {
+                    vm.results = {
+                        google: responses[0],
+                        bing: responses[1]
+                    };
                 })
-                .finally(function() {
+                .finally(function () {
+                    vm.isInitialised = true;
                     vm.isBusy = false;
                 });
         }
