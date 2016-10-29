@@ -12,7 +12,7 @@ namespace Isp.Core.Entities
         public long? TotalCount { get; set; }
 
         [JsonProperty("TotalCount")]
-        public string TotalCountFormatted => TotalCount?.ToString() ?? "NULL";
+        public string TotalCountFormatted => TotalCount?.ToString() ?? "?";
 
         public double? Time { get; set; }
 

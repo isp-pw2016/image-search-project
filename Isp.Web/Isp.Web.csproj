@@ -144,6 +144,7 @@
   <ItemGroup>
     <Content Include="Angular\app.module.js" />
     <Content Include="Angular\Controllers\home.controller.js" />
+    <Content Include="Angular\Directives\image-fetch.directive.js" />
     <Content Include="Angular\Factories\common.factory.js" />
     <Content Include="Angular\Services\home.service.js" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -199,6 +200,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Constants.cshtml" />
+    <Content Include="Views\Shared\Angular\ImageFetchNg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Isp.Core\Isp.Core.csproj">

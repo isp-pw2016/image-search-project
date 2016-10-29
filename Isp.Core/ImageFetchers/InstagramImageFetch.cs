@@ -30,6 +30,7 @@ namespace Isp.Core.ImageFetchers
     /// - API allows only a single tag to be queried
     /// - API supports strange pagination: take count is available, but skipping
     ///   is done by assign min_ and max_tag_id which are known from the request
+    /// - API seems to receive up to 33 images
     /// - API does not provide the total number of images one can get via a specific tag
     /// </summary>
     public class InstagramImageFetch : ImageFetchBase

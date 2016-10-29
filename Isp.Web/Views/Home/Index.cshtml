@@ -18,103 +18,23 @@
         <div ng-if="vm.isBusy" class="loader-overlay">
             <div class="loader"></div>
         </div>
+        
+        <div ng-if="vm.isInitialised">
+            <image-fetch name="Google Custom Search API v1 (server side)"
+                         data="vm.results.google"></image-fetch>
+            
+            <image-fetch name="Bing Image Search API v5 (server side)"
+                         data="vm.results.bing"></image-fetch>
 
-        <div class="panel panel-default m-lr-15 m-b-60" ng-if="vm.isInitialised">
-            <div class="panel-heading">
-                <div>
-                    <strong>Google Custom Search API v1 (server side)</strong>
-                </div>
-                <div>
-                    Total results:
-                    <span ng-bind="vm.results.google.imageFetch.totalCount"></span>
-                </div>
-                <div>
-                    Request time:
-                    <span ng-bind="vm.results.google.timeString"></span>
-                    (<span ng-bind="vm.results.google.time"></span>)
-                </div>
-                <div>
-                    Self-reported search time:
-                    <span ng-bind="vm.results.google.imageFetch.timeString"></span>
-                    (<span ng-bind="vm.results.google.imageFetch.time"></span>)
-                </div>
-            </div>
-            <div class="panel-body p-b-5">
-                <p ng-if="vm.results.google.imageFetch.totalCount === 0">
-                    No images found.
-                </p>
-                <div ng-repeat="image in vm.results.google.imageFetch.imageItems" class="col-lg-3 col-md-4 col-xs-12 thumb">
-                    <a class="thumbnail" href="{{::image.link}}" target="_blank">
-                        <img class="img-responsive" ng-src="{{::image.link}}" title="{{::image.title}}">
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-default m-lr-15 m-b-60" ng-if="vm.isInitialised">
-            <div class="panel-heading">
-                <div>
-                    <strong>Bing Image Search API v5 (server side)</strong>
-                </div>
-                <div>
-                    Total results:
-                    <span ng-bind="vm.results.bing.imageFetch.totalCount"></span>
-                </div>
-                <div>
-                    Request time:
-                    <span ng-bind="vm.results.bing.timeString"></span>
-                    (<span ng-bind="vm.results.bing.time"></span>)
-                </div>
-                <div>
-                    Self-reported search time:
-                    <span ng-bind="vm.results.bing.imageFetch.timeString"></span>
-                    (<span ng-bind="vm.results.bing.imageFetch.time"></span>)
-                </div>
-            </div>
-            <div class="panel-body p-b-5">
-                <p ng-if="vm.results.bing.imageFetch.totalCount === 0">
-                    No images found.
-                </p>
-                <div ng-repeat="image in vm.results.bing.imageFetch.imageItems" class="col-lg-3 col-md-4 col-xs-12 thumb">
-                    <a class="thumbnail" href="{{::image.link}}" target="_blank">
-                        <img class="img-responsive" ng-src="{{::image.link}}" title="{{::image.title}}">
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-default m-lr-15" ng-if="vm.isInitialised">
-            <div class="panel-heading">
-                <div>
-                    <strong>Instagram Tag API v1 (server side)</strong>
-                </div>
-                <div>
-                    Total results:
-                    <span ng-bind="vm.results.instagram.imageFetch.totalCount"></span>
-                </div>
-                <div>
-                    Request time:
-                    <span ng-bind="vm.results.instagram.timeString"></span>
-                    (<span ng-bind="vm.results.instagram.time"></span>)
-                </div>
-                <div>
-                    Self-reported search time:
-                    <span ng-bind="vm.results.instagram.imageFetch.timeString"></span>
-                    (<span ng-bind="vm.results.instagram.imageFetch.time"></span>)
-                </div>
-            </div>
-            <div class="panel-body p-b-5">
-                <p ng-if="vm.results.instagram.imageFetch.totalCount === 0">
-                    No images found.
-                </p>
-                <div ng-repeat="image in vm.results.instagram.imageFetch.imageItems" class="col-lg-3 col-md-4 col-xs-12 thumb">
-                    <a class="thumbnail" href="{{::image.link}}" target="_blank">
-                        <img class="img-responsive" ng-src="{{::image.link}}" title="{{::image.title}}">
-                    </a>
-                </div>
-            </div>
+            <image-fetch name="Instagram Tag API v1 (server side)"
+                         data="vm.results.instagram"
+                         margin-after="false"></image-fetch>
         </div>
     </div>
 
     <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'limit': 5}"></toaster-container>
 </div>
+
+<script type="text/ng-template" id="image-fetch.html">
+    @Html.Partial("Angular/ImageFetchNg")
+</script>

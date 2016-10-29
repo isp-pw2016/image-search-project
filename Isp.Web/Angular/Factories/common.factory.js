@@ -11,7 +11,11 @@
         var factory = {
             showError: showError,
             showInfo: showInfo,
+            isUndefined: isUndefined,
             isObject: isObject,
+            isStringNotNull: isStringNotNull,
+            isBool: isBool,
+            isNumber: isNumber,
             requestSuccess: requestSuccess,
             requestFailure: requestFailure
         };
@@ -36,8 +40,24 @@
             showError(message, caption, 'info');
         }
 
-        function isObject(obj) {
-            return typeof obj === 'object' && obj !== null;
+        function isUndefined(arg) {
+            return typeof arg === 'undefined';
+        }
+
+        function isObject(arg) {
+            return typeof arg === 'object' && arg !== null;
+        }
+
+        function isStringNotNull(arg) {
+            return typeof arg === 'string' && arg.length > 0;
+        }
+
+        function isBool(arg) {
+            return typeof arg === 'boolean';
+        }
+
+        function isNumber(arg) {
+            return typeof arg === 'number';
         }
 
         function requestSuccess(response) {

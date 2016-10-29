@@ -24,7 +24,7 @@ namespace Isp.Core.Extensions
         public static string ToTimeString(this double? time, int precision = 3)
         {
             return !time.HasValue
-                ? "NULL"
+                ? string.Empty
                 : ToTimeStringFormatter(time.Value, precision);
         }
 
@@ -39,7 +39,7 @@ namespace Isp.Core.Extensions
             if (time > 1e-9)
                 return $"{Math.Round(1e9 * time, precision)} ns";
 
-            return "~0";
+            return string.Empty;
         }
     }
 }

@@ -21,6 +21,7 @@ namespace Isp.Web
                 "~/Scripts/toaster.js",
                 "~/Angular/app.module.js",
                 "~/Angular/Controllers/home.controller.js",
+                "~/Angular/Directives/image-fetch.directive.js",
                 "~/Angular/Factories/common.factory.js",
                 "~/Angular/Services/home.service.js"));
 
