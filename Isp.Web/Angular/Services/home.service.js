@@ -13,7 +13,8 @@
         var service = {
             getGoogleImages: getGoogleImages,
             getBingImages: getBingImages,
-            getInstagramImages: getInstagramImages
+            getInstagramImages: getInstagramImages,
+            getShutterstockImages: getShutterstockImages
         };
 
         return service;
@@ -30,6 +31,10 @@
 
         function getInstagramImages(model) {
             return getImages(paths.getInstagramImages, model);
+        }
+
+        function getShutterstockImages(model) {
+            return getImages(paths.getShutterstockImages, model);
         }
 
         ////////////////////

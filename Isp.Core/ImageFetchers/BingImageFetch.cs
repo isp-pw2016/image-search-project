@@ -54,7 +54,7 @@ namespace Isp.Core.ImageFetchers
             }
 
             var jsonString = await task.Content.ReadAsStringAsync();
-            if (jsonString == null)
+            if (string.IsNullOrWhiteSpace(jsonString))
             {
                 throw new ImageFetchException("Error when reading the response from the API", _name);
             }
@@ -64,9 +64,11 @@ namespace Isp.Core.ImageFetchers
             {
                 search = JsonConvert.DeserializeObject<BingJson>(jsonString);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new ImageFetchException("Error when deserializing the response from the API", _name);
+                throw new ImageFetchException(
+                    $"Error when deserializing the response from the API ({ex.Message})",
+                    _name);
             }
 
             var result = new ImageFetchResult
