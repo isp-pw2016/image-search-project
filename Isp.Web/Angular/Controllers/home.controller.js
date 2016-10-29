@@ -36,18 +36,20 @@
             var googlePromise = homeService.getGoogleImages(vm.model);
             var bingPromise = homeService.getBingImages(vm.model);
             var instagramPromise = homeService.getInstagramImages(vm.model);
+            var flickrPromise = homeService.getFlickrImages(vm.model);
             var shutterstockPromise = homeService.getShutterstockImages(vm.model);
 
-            $q.all([googlePromise, bingPromise, instagramPromise, shutterstockPromise])
+            $q.all([googlePromise, bingPromise, instagramPromise, flickrPromise, shutterstockPromise])
                 .then(function(responses) {
                     vm.results = {
                         google: responses[0],
                         bing: responses[1],
                         instagram: responses[2],
-                        shutterstock: responses[3]
+                        flickr: responses[3],
+                        shutterstock: responses[4]
                     };
                 })
-                .finally(function () {
+                .finally(function() {
                     vm.isInitialised = true;
                     vm.isBusy = false;
                 });

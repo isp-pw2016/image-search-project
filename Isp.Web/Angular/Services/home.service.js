@@ -14,6 +14,7 @@
             getGoogleImages: getGoogleImages,
             getBingImages: getBingImages,
             getInstagramImages: getInstagramImages,
+            getFlickrImages: getFlickrImages,
             getShutterstockImages: getShutterstockImages
         };
 
@@ -31,6 +32,10 @@
 
         function getInstagramImages(model) {
             return getImages(paths.getInstagramImages, model);
+        }
+
+        function getFlickrImages(model) {
+            return getImages(paths.getFlickrImages, model);
         }
 
         function getShutterstockImages(model) {

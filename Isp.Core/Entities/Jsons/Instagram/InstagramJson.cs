@@ -30,7 +30,7 @@ namespace Isp.Core.Entities.Jsons.Instagram
         public string NextMinId { get; set; }
 
         [JsonProperty("min_tag_id")]
-        public string MinTagId { get; set; }
+        public string MlongagId { get; set; }
 
         [JsonProperty("next_url")]
         public string NextUrl { get; set; }
@@ -39,7 +39,7 @@ namespace Isp.Core.Entities.Jsons.Instagram
     public class Meta
     {
         [JsonProperty("code")]
-        public int Code { get; set; }
+        public long Code { get; set; }
     }
 
     public class LowResolution
@@ -48,10 +48,10 @@ namespace Isp.Core.Entities.Jsons.Instagram
         public string Url { get; set; }
 
         [JsonProperty("width")]
-        public int Width { get; set; }
+        public long Width { get; set; }
 
         [JsonProperty("height")]
-        public int Height { get; set; }
+        public long Height { get; set; }
     }
 
     public class StandardResolution
@@ -60,10 +60,10 @@ namespace Isp.Core.Entities.Jsons.Instagram
         public string Url { get; set; }
 
         [JsonProperty("width")]
-        public int Width { get; set; }
+        public long Width { get; set; }
 
         [JsonProperty("height")]
-        public int Height { get; set; }
+        public long Height { get; set; }
     }
 
     public class LowBandwidth
@@ -72,10 +72,10 @@ namespace Isp.Core.Entities.Jsons.Instagram
         public string Url { get; set; }
 
         [JsonProperty("width")]
-        public int Width { get; set; }
+        public long Width { get; set; }
 
         [JsonProperty("height")]
-        public int Height { get; set; }
+        public long Height { get; set; }
     }
 
     public class Videos
@@ -102,19 +102,19 @@ namespace Isp.Core.Entities.Jsons.Instagram
         public double Longitude { get; set; }
 
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
     }
 
     public class Comments
     {
         [JsonProperty("count")]
-        public int Count { get; set; }
+        public long Count { get; set; }
     }
 
     public class Likes
     {
         [JsonProperty("count")]
-        public int Count { get; set; }
+        public long Count { get; set; }
     }
 
     public class Thumbnail
@@ -123,10 +123,10 @@ namespace Isp.Core.Entities.Jsons.Instagram
         public string Url { get; set; }
 
         [JsonProperty("width")]
-        public int Width { get; set; }
+        public long Width { get; set; }
 
         [JsonProperty("height")]
-        public int Height { get; set; }
+        public long Height { get; set; }
     }
 
     public class Images

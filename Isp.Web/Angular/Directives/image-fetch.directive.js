@@ -22,20 +22,20 @@
         return directive;
     }
 
-    ImageFetchController.$inject = ['commonFactory'];
+    ImageFetchController.$inject = ['$scope', 'commonFactory'];
 
-    function ImageFetchController(commonFactory) {
+    function ImageFetchController($scope, commonFactory) {
         var vm = this;
 
-        parse();
+        vm.marginAfter = commonFactory.isBool(vm.marginAfter) ? vm.marginAfter : true;
+
+        $scope.$watch('vm.data', function() {
+            parse();
+        });
 
         ////////////////////
 
         function parse() {
-            vm.marginAfter = commonFactory.isBool(vm.marginAfter)
-                ? vm.marginAfter
-                : true;
-
             if (commonFactory.isObject(vm.data)) {
                 timeToString(vm.data);
 

@@ -6,13 +6,13 @@ namespace Isp.Core.Entities.Jsons.Shutterstock
     public class ShutterstockJson
     {
         [JsonProperty("page")]
-        public int Page { get; set; }
+        public long Page { get; set; }
 
         [JsonProperty("per_page")]
-        public int PerPage { get; set; }
+        public long PerPage { get; set; }
 
         [JsonProperty("total_count")]
-        public int TotalCount { get; set; }
+        public long TotalCount { get; set; }
 
         [JsonProperty("search_id")]
         public string SearchId { get; set; }
@@ -27,22 +27,22 @@ namespace Isp.Core.Entities.Jsons.Shutterstock
         public string DisplayName { get; set; }
 
         [JsonProperty("dpi")]
-        public int Dpi { get; set; }
+        public long Dpi { get; set; }
 
         [JsonProperty("file_size")]
-        public int FileSize { get; set; }
+        public long FileSize { get; set; }
 
         [JsonProperty("format")]
         public string Format { get; set; }
 
         [JsonProperty("height")]
-        public int Height { get; set; }
+        public long Height { get; set; }
 
         [JsonProperty("is_licensable")]
         public bool IsLicensable { get; set; }
 
         [JsonProperty("width")]
-        public int Width { get; set; }
+        public long Width { get; set; }
     }
 
     public class MediumJpg
@@ -51,22 +51,22 @@ namespace Isp.Core.Entities.Jsons.Shutterstock
         public string DisplayName { get; set; }
 
         [JsonProperty("dpi")]
-        public int Dpi { get; set; }
+        public long Dpi { get; set; }
 
         [JsonProperty("file_size")]
-        public int FileSize { get; set; }
+        public long FileSize { get; set; }
 
         [JsonProperty("format")]
         public string Format { get; set; }
 
         [JsonProperty("height")]
-        public int Height { get; set; }
+        public long Height { get; set; }
 
         [JsonProperty("is_licensable")]
         public bool IsLicensable { get; set; }
 
         [JsonProperty("width")]
-        public int Width { get; set; }
+        public long Width { get; set; }
     }
 
     public class HugeJpg
@@ -75,22 +75,22 @@ namespace Isp.Core.Entities.Jsons.Shutterstock
         public string DisplayName { get; set; }
 
         [JsonProperty("dpi")]
-        public int Dpi { get; set; }
+        public long Dpi { get; set; }
 
         [JsonProperty("file_size")]
-        public int FileSize { get; set; }
+        public long FileSize { get; set; }
 
         [JsonProperty("format")]
         public string Format { get; set; }
 
         [JsonProperty("height")]
-        public int Height { get; set; }
+        public long Height { get; set; }
 
         [JsonProperty("is_licensable")]
         public bool IsLicensable { get; set; }
 
         [JsonProperty("width")]
-        public int Width { get; set; }
+        public long Width { get; set; }
     }
 
     public class HugeTiff
@@ -99,58 +99,58 @@ namespace Isp.Core.Entities.Jsons.Shutterstock
         public string DisplayName { get; set; }
 
         [JsonProperty("dpi")]
-        public int Dpi { get; set; }
+        public long Dpi { get; set; }
 
         [JsonProperty("file_size")]
-        public int FileSize { get; set; }
+        public long FileSize { get; set; }
 
         [JsonProperty("format")]
         public string Format { get; set; }
 
         [JsonProperty("height")]
-        public int Height { get; set; }
+        public long Height { get; set; }
 
         [JsonProperty("is_licensable")]
         public bool IsLicensable { get; set; }
 
         [JsonProperty("width")]
-        public int Width { get; set; }
+        public long Width { get; set; }
     }
 
     public class Preview
     {
         [JsonProperty("height")]
-        public int Height { get; set; }
+        public long Height { get; set; }
 
         [JsonProperty("url")]
         public string Url { get; set; }
 
         [JsonProperty("width")]
-        public int Width { get; set; }
+        public long Width { get; set; }
     }
 
     public class SmallThumb
     {
         [JsonProperty("height")]
-        public int Height { get; set; }
+        public long Height { get; set; }
 
         [JsonProperty("url")]
         public string Url { get; set; }
 
         [JsonProperty("width")]
-        public int Width { get; set; }
+        public long Width { get; set; }
     }
 
     public class LargeThumb
     {
         [JsonProperty("height")]
-        public int Height { get; set; }
+        public long Height { get; set; }
 
         [JsonProperty("url")]
         public string Url { get; set; }
 
         [JsonProperty("width")]
-        public int Width { get; set; }
+        public long Width { get; set; }
     }
 
     public class Assets
