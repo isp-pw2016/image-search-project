@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Isp.Core.Entities;
+using Isp.Core.Exceptions;
+using Newtonsoft.Json;
 
 namespace Isp.Core.ImageFetchers
 {
@@ -14,7 +16,7 @@ namespace Isp.Core.ImageFetchers
     /// </summary>
     public abstract class ImageFetchBase
     {
-        private static readonly double StopwatchFrequency = Stopwatch.Frequency;
+        private static readonly double _stopwatchFrequency = Stopwatch.Frequency;
 
         protected abstract Task<ImageFetchResult> FetchImage(ImageFetchQuery model);
 
@@ -35,8 +37,25 @@ namespace Isp.Core.ImageFetchers
             return new BenchmarkResult
             {
                 ImageFetch = imageFetchResult,
-                Stopwatch = stopwatch.ElapsedTicks / StopwatchFrequency
+                Stopwatch = stopwatch.ElapsedTicks / _stopwatchFrequency
             };
+        }
+
+        protected T JsonDeserialize<T>(string json, string name) where T : class
+        {
+            T model;
+            try
+            {
+                model = JsonConvert.DeserializeObject<T>(json);
+            }
+            catch (Exception ex)
+            {
+                throw new ImageFetchException(
+                    $"Error when deserializing the response from the API ({ex.Message})",
+                    name);
+            }
+
+            return model;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -7,7 +6,6 @@ using System.Web;
 using Isp.Core.Entities;
 using Isp.Core.Entities.Jsons.Instagram;
 using Isp.Core.Exceptions;
-using Newtonsoft.Json;
 
 namespace Isp.Core.ImageFetchers
 {
@@ -51,8 +49,6 @@ namespace Isp.Core.ImageFetchers
                 throw new ImageFetchException("API requires a single tag", _name);
             }
 
-            var client = new HttpClient();
-
             var requestParams = HttpUtility.ParseQueryString(string.Empty);
             requestParams["access_token"] = _accessToken;
 
@@ -62,33 +58,27 @@ namespace Isp.Core.ImageFetchers
             }
 
             var apiUrlWithTag = string.Format(_apiUrl, singleTag);
-            var task = await client.GetAsync($"{apiUrlWithTag}?{requestParams}");
-            if (task == null)
+
+            string jsonString;
+            using (var client = new HttpClient())
             {
-                throw new ImageFetchException("No response from the API", _name);
+                var task = await client.GetAsync($"{apiUrlWithTag}?{requestParams}");
+                if (task?.Content == null)
+                {
+                    throw new ImageFetchException("No response from the API", _name);
+                }
+
+                jsonString = await task.Content.ReadAsStringAsync();
+                if (string.IsNullOrWhiteSpace(jsonString))
+                {
+                    throw new ImageFetchException("Error when reading the response from the API", _name);
+                }
             }
 
-            var jsonString = await task.Content.ReadAsStringAsync();
-            if (string.IsNullOrWhiteSpace(jsonString))
-            {
-                throw new ImageFetchException("Error when reading the response from the API", _name);
-            }
-
-            InstagramJson search;
-            try
-            {
-                search = JsonConvert.DeserializeObject<InstagramJson>(jsonString);
-            }
-            catch (Exception ex)
-            {
-                throw new ImageFetchException(
-                    $"Error when deserializing the response from the API ({ex.Message})",
-                    _name);
-            }
-
+            var search = JsonDeserialize<InstagramJson>(jsonString, _name);
             var result = new ImageFetchResult
             {
-                ImageItems = search.Data?.Select(i => new ImageItem
+                ImageItems = search?.Data?.Select(i => new ImageItem
                 {
                     Link = i.Images?.StandardResolution?.Url,
                     Title = i.Caption?.Text

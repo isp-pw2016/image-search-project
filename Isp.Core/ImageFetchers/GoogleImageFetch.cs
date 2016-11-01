@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using Google.Apis.Customsearch.v1;
+using Google.Apis.Customsearch.v1.Data;
 using Google.Apis.Services;
 using Isp.Core.Entities;
 using Isp.Core.Exceptions;
@@ -51,21 +52,25 @@ namespace Isp.Core.ImageFetchers
                 request.Num = Math.Min(model.Take.Value, 10);
             }
 
-            var search = await request.ExecuteAsync();
-            if (search == null)
+            Search search;
+            try
             {
-                throw new ImageFetchException("Query returned empty response", _name);
+                search = await request.ExecuteAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new ImageFetchException($"Error when reading the response from the API: {ex.Message}", _name);
             }
 
             var result = new ImageFetchResult
             {
-                ImageItems = search.Items?.Select(i => new ImageItem
+                ImageItems = search?.Items?.Select(i => new ImageItem
                 {
                     Link = i.Link,
                     Title = i.Title
                 }),
-                TotalCount = search.SearchInformation.TotalResults ?? search.Items?.Count ?? 0,
-                Time = search.SearchInformation.SearchTime ?? default(double)
+                TotalCount = search?.SearchInformation?.TotalResults ?? search?.Items?.Count ?? 0,
+                Time = search?.SearchInformation?.SearchTime ?? default(double)
             };
 
             return result;

@@ -85,6 +85,7 @@
     <Compile Include="Entities\Jsons\Shutterstock\ShutterstockJson.cs" />
     <Compile Include="Exceptions\ImageFetchException.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="ImageFetchers\BingImageFetch.cs" />
     <Compile Include="ImageFetchers\FlickrImageFetch.cs" />
     <Compile Include="ImageFetchers\InstagramImageFetch.cs" />

@@ -9,7 +9,6 @@ using System.Web;
 using Isp.Core.Entities;
 using Isp.Core.Entities.Jsons.Shutterstock;
 using Isp.Core.Exceptions;
-using Newtonsoft.Json;
 
 namespace Isp.Core.ImageFetchers
 {
@@ -38,12 +37,6 @@ namespace Isp.Core.ImageFetchers
 
         protected override async Task<ImageFetchResult> FetchImage(ImageFetchQuery model)
         {
-            var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_clientId}:{_clientSecret}"));
-
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
-            client.DefaultRequestHeaders.Add("User-Agent", "ISP");
-
             var requestParams = HttpUtility.ParseQueryString(string.Empty);
             requestParams["query"] = model.Query;
             requestParams["sort"] = "relevance";
@@ -64,38 +57,32 @@ namespace Isp.Core.ImageFetchers
                 requestParams["page"] = Math.Max(model.Skip.Value, 1).ToString();
             }
 
-            var task = await client.GetByteArrayAsync($"{_apiUrl}?{requestParams}");
-            if (task == null)
+            string jsonString;
+            using (var client = new HttpClient())
             {
-                throw new ImageFetchException("No response from the API", _name);
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_clientId}:{_clientSecret}"));
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+                client.DefaultRequestHeaders.Add("User-Agent", "ISP");
+
+                var task = await client.GetByteArrayAsync($"{_apiUrl}?{requestParams}");
+                if (task == null)
+                {
+                    throw new ImageFetchException("No response from the API", _name);
+                }
+
+                jsonString = Encoding.UTF8.GetString(task);
             }
 
-            var jsonString = Encoding.UTF8.GetString(task);
-            if (jsonString == null)
-            {
-                throw new ImageFetchException("Error when reading the response from the API", _name);
-            }
-
-            ShutterstockJson search;
-            try
-            {
-                search = JsonConvert.DeserializeObject<ShutterstockJson>(jsonString);
-            }
-            catch (Exception ex)
-            {
-                throw new ImageFetchException(
-                    $"Error when deserializing the response from the API ({ex.Message})",
-                    _name);
-            }
-
+            var search = JsonDeserialize<ShutterstockJson>(jsonString, _name);
             var result = new ImageFetchResult
             {
-                ImageItems = search.Data?.Select(i => new ImageItem
+                ImageItems = search?.Data?.Select(i => new ImageItem
                 {
                     Link = i.Assets?.Preview?.Url,
                     Title = i.Description
                 }),
-                TotalCount = search.TotalCount
+                TotalCount = search?.TotalCount
             };
 
             return result;

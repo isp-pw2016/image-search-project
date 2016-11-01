@@ -7,7 +7,7 @@ using System.Web;
 using Isp.Core.Entities;
 using Isp.Core.Entities.Jsons.Flickr;
 using Isp.Core.Exceptions;
-using Newtonsoft.Json;
+using Isp.Core.Extensions;
 
 namespace Isp.Core.ImageFetchers
 {
@@ -44,8 +44,6 @@ namespace Isp.Core.ImageFetchers
 
             var tagsParam = string.Join(",", tags);
 
-            var client = new HttpClient();
-
             var requestParams = HttpUtility.ParseQueryString(string.Empty);
             requestParams["method"] = "flickr.photos.search";
             requestParams["api_key"] = _apiKey;
@@ -64,37 +62,31 @@ namespace Isp.Core.ImageFetchers
                 requestParams["page"] = Math.Max(model.Skip.Value, 1).ToString();
             }
 
-            var task = await client.GetAsync($"{_apiUrl}?{requestParams}");
-            if (task == null)
+            string jsonString;
+            using (var client = new HttpClient())
             {
-                throw new ImageFetchException("No response from the API", _name);
+                var task = await client.GetAsync($"{_apiUrl}?{requestParams}");
+                if (task?.Content == null)
+                {
+                    throw new ImageFetchException("No response from the API", _name);
+                }
+
+                jsonString = await task.Content.ReadAsStringAsync();
+                if (string.IsNullOrWhiteSpace(jsonString))
+                {
+                    throw new ImageFetchException("Error when reading the response from the API", _name);
+                }
             }
 
-            var jsonString = await task.Content.ReadAsStringAsync();
-            if (string.IsNullOrWhiteSpace(jsonString))
-            {
-                throw new ImageFetchException("Error when reading the response from the API", _name);
-            }
-
-            FlickrJson search;
-            try
-            {
-                search = JsonConvert.DeserializeObject<FlickrJson>(jsonString);
-            }
-            catch (Exception ex)
-            {
-                throw new ImageFetchException(
-                    $"Error when deserializing the response from the API ({ex.Message})",
-                    _name);
-            }
-
+            var search = JsonDeserialize<FlickrJson>(jsonString, _name);
             var result = new ImageFetchResult
             {
-                ImageItems = search.Photos?.Photo?.Select(i => new ImageItem
+                ImageItems = search?.Photos?.Photo?.Select(i => new ImageItem
                 {
                     Link = string.Format(_photoUrl, i.Farm, i.Server, i.Id, i.Secret),
                     Title = i.Title
-                })
+                }),
+                TotalCount = search?.Photos?.Total.TryToInt64()
             };
 
             return result;

@@ -7,7 +7,6 @@ using System.Web;
 using Isp.Core.Entities;
 using Isp.Core.Entities.Jsons.Bing;
 using Isp.Core.Exceptions;
-using Newtonsoft.Json;
 
 namespace Isp.Core.ImageFetchers
 {
@@ -31,9 +30,6 @@ namespace Isp.Core.ImageFetchers
 
         protected override async Task<ImageFetchResult> FetchImage(ImageFetchQuery model)
         {
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", _apiKey);
-
             var requestParams = HttpUtility.ParseQueryString(string.Empty);
             requestParams["q"] = model.Query;
 
@@ -47,38 +43,33 @@ namespace Isp.Core.ImageFetchers
                 requestParams["offset"] = Math.Max(model.Skip.Value, 0).ToString();
             }
 
-            var task = await client.GetAsync($"{_apiUrl}?{requestParams}");
-            if (task == null)
+            string jsonString;
+            using (var client = new HttpClient())
             {
-                throw new ImageFetchException("No response from the API", _name);
+                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", _apiKey);
+
+                var task = await client.GetAsync($"{_apiUrl}?{requestParams}");
+                if (task == null)
+                {
+                    throw new ImageFetchException("No response from the API", _name);
+                }
+
+                jsonString = await task.Content.ReadAsStringAsync();
+                if (string.IsNullOrWhiteSpace(jsonString))
+                {
+                    throw new ImageFetchException("Error when reading the response from the API", _name);
+                }
             }
 
-            var jsonString = await task.Content.ReadAsStringAsync();
-            if (string.IsNullOrWhiteSpace(jsonString))
-            {
-                throw new ImageFetchException("Error when reading the response from the API", _name);
-            }
-
-            BingJson search;
-            try
-            {
-                search = JsonConvert.DeserializeObject<BingJson>(jsonString);
-            }
-            catch (Exception ex)
-            {
-                throw new ImageFetchException(
-                    $"Error when deserializing the response from the API ({ex.Message})",
-                    _name);
-            }
-
+            var search = JsonDeserialize<BingJson>(jsonString, _name);
             var result = new ImageFetchResult
             {
-                ImageItems = search.Value?.Select(i => new ImageItem
+                ImageItems = search?.Value?.Select(i => new ImageItem
                 {
                     Link = i.ContentUrl,
                     Title = i.Name
                 }),
-                TotalCount = search.TotalEstimatedMatches
+                TotalCount = search?.TotalEstimatedMatches
             };
 
             return result;
