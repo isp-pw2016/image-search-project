@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\BenchmarkResult.cs" />
+    <Compile Include="Entities\ImageFetchHandler.cs" />
     <Compile Include="Entities\ImageFetchResult.cs" />
     <Compile Include="Entities\ImageFetchQuery.cs" />
     <Compile Include="Entities\ImageItem.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Entities\Jsons\Shutterstock\ShutterstockJson.cs" />
     <Compile Include="Exceptions\ImageFetchException.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="ImageFetchers\BingImageFetch.cs" />
     <Compile Include="ImageFetchers\FlickrImageFetch.cs" />

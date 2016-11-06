@@ -22,7 +22,7 @@ namespace Isp.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            // MVC: Use JSON.NET as the default serializer
+            // MVC: Use JSON.NET as the default deserializer
             ValueProviderFactories.Factories.Remove(ValueProviderFactories.Factories
                 .OfType<JsonValueProviderFactory>()
                 .FirstOrDefault());

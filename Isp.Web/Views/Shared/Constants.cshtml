@@ -1,13 +1,18 @@
-﻿@using Isp.Web.Extensions
+﻿@using Isp.Core.Entities
+@using Isp.Core.Extensions
+@using Isp.Web.Extensions
 @{
     <script type="text/javascript">
         window.constants = {
             'paths': {
-                'getGoogleImages': '@Url.AbsoluteAction("GetGoogleImages", "Home")',
-                'getBingImages': '@Url.AbsoluteAction("GetBingImages", "Home")',
-                'getInstagramImages': '@Url.AbsoluteAction("GetInstagramImages", "Home")',
-                'getFlickrImages': '@Url.AbsoluteAction("GetFlickrImages", "Home")',
-                'getShutterstockImages': '@Url.AbsoluteAction("GetShutterstockImages", "Home")'
+                'getImages': '@Url.AbsoluteAction("GetImages", "Home")'
+            },
+            'enums': {
+                'google': '@ImageFetchHandler.Google.ToLong()',
+                'bing': '@ImageFetchHandler.Bing.ToLong()',
+                'instagram': '@ImageFetchHandler.Instagram.ToLong()',
+                'flickr': '@ImageFetchHandler.Flickr.ToLong()',
+                'shutterstock': '@ImageFetchHandler.Shutterstock.ToLong()'
             }
         };
     </script>

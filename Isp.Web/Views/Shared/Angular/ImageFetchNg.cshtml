@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="panel-body p-b-5">
-        <p ng-if="vm.data.imageFetch.totalCount.length === 0">
+        <p ng-if="vm.data.imageFetch.totalCount === '0'">
             No images found.
         </p>
         <div ng-repeat="image in vm.data.imageFetch.imageItems" class="col-lg-3 col-md-4 col-xs-12 thumb">

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Isp.Core.Entities;
 using Isp.Core.ImageFetchers;
@@ -35,41 +36,36 @@ namespace Isp.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetGoogleImages(ImageFetchQuery model)
+        public async Task<ActionResult> GetImages(ImageFetchHandler handler, string query, long? skip, long? take)
         {
-            var result = await _googleImageFetch.Execute(model);
+            var model = new ImageFetchQuery
+            {
+                Query = query,
+                Skip = skip,
+                Take = take
+            };
 
-            return new JsonNetResult(result);
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> GetBingImages(ImageFetchQuery model)
-        {
-            var result = await _bingImageFetch.Execute(model);
-
-            return new JsonNetResult(result);
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> GetInstagramImages(ImageFetchQuery model)
-        {
-            var result = await _instagramImageFetch.Execute(model);
-
-            return new JsonNetResult(result);
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> GetFlickrImages(ImageFetchQuery model)
-        {
-            var result = await _flickrImageFetch.Execute(model);
-
-            return new JsonNetResult(result);
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> GetShutterstockImages(ImageFetchQuery model)
-        {
-            var result = await _shutterstockImageFetch.Execute(model);
+            BenchmarkResult result;
+            switch (handler)
+            {
+                case ImageFetchHandler.Google:
+                    result = await _googleImageFetch.Execute(model);
+                    break;
+                case ImageFetchHandler.Bing:
+                    result = await _bingImageFetch.Execute(model);
+                    break;
+                case ImageFetchHandler.Instagram:
+                    result = await _instagramImageFetch.Execute(model);
+                    break;
+                case ImageFetchHandler.Flickr:
+                    result = await _flickrImageFetch.Execute(model);
+                    break;
+                case ImageFetchHandler.Shutterstock:
+                    result = await _shutterstockImageFetch.Execute(model);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
 
             return new JsonNetResult(result);
         }

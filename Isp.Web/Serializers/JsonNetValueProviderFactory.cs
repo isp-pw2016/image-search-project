@@ -11,14 +11,14 @@ using Newtonsoft.Json.Converters;
 namespace Isp.Web.Serializers
 {
     /// <summary>
-    /// Use JSON.NET as the default deserializer of objects in MVC
-    /// By default, MVC employs JavaScriptSerializer to deserialize objects...
+    /// Use JSON.NET as the default deserializer of JSON in MVC
+    /// By default, MVC employs JavaScriptSerializer to deserialize JSON objects...
     /// </summary>
     public class JsonNetValueProviderFactory : ValueProviderFactory
     {
         public override IValueProvider GetValueProvider(ControllerContext controllerContext)
         {
-            if (controllerContext == null)
+            if (controllerContext?.HttpContext?.Request == null)
             {
                 throw new ArgumentNullException(nameof(controllerContext));
             }
