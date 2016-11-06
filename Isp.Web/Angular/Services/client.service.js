@@ -13,6 +13,7 @@
         var service = {
             getGoogleImages: getGoogleImages,
             getBingImages: getBingImages,
+            getInstagramImages: getInstagramImages,
             getShutterstockImages: getShutterstockImages
         };
 
@@ -114,6 +115,52 @@
 
         ////////////////////
 
+        function getInstagramImages(model) {
+            var trimmed = _.trim(model.query);
+            var hashtag = _.split(trimmed, ' ', 1);
+
+            var url = _.replace(configs.instagramApiUrl, '{0}', hashtag);
+
+            return getImages(url, model, paramsInstagramImages, successInstagramImages, undefined, 'JSONP');
+        }
+
+        function paramsInstagramImages(model) {
+            return {
+                access_token: configs.instagramAccessToken,
+                count: model.take,
+                callback: 'JSON_CALLBACK'
+            };
+        }
+
+        function successInstagramImages(response) {
+            var i;
+            var model = {};
+            var resp = response.data;
+
+            model.imageItems = [];
+            if (commonFactory.isArrayNotNull(resp.data)) {
+                for (i = 0; i < resp.data.length; i++) {
+                    var iter = resp.data[i];
+                    var link = commonFactory.isObject(iter.images)
+                        && commonFactory.isObject(iter.images.standard_resolution)
+                        ? iter.images.standard_resolution.url
+                        : null;
+                    var title = commonFactory.isObject(iter.caption) ? iter.caption.text : null;
+
+                    model.imageItems.push({
+                        link: link,
+                        title: title
+                    });
+                }
+            }
+
+            model.totalCount = '?';
+
+            return model;
+        }
+
+        ////////////////////
+
         function getShutterstockImages(model) {
             var headers = {
                 'Authorization': 'Basic ' + configs.shutterstockCredentials,
@@ -165,7 +212,7 @@
 
         ////////////////////
 
-        function getImages(apiUrl, model, requestParams, requestSuccess, headers) {
+        function getImages(apiUrl, model, requestParams, requestSuccess, headers, method) {
             var start = performance.now();
 
             if (!commonFactory.isStringNotNull(apiUrl)
@@ -175,9 +222,12 @@
                 $q.reject();
             }
 
+            var methodParsed = commonFactory.isStringNotNull(method) ? method : 'GET';
             var params = requestParams(model);
 
-            return $http.get(apiUrl, {
+            return $http({
+                    method: methodParsed,
+                    url: apiUrl,
                     params: params,
                     headers: headers
                 })
