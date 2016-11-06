@@ -12,6 +12,7 @@
 
         var service = {
             getGoogleImages: getGoogleImages,
+            getBingImages: getBingImages,
             getShutterstockImages: getShutterstockImages
         };
 
@@ -63,6 +64,50 @@
                     ? resp.searchInformation.searchTime
                     : undefined;
             }
+
+            return model;
+        }
+
+        ////////////////////
+
+        function getBingImages(model) {
+            var headers = {
+                'Ocp-Apim-Subscription-Key': configs.bingApiKey
+            };
+
+            return getImages(configs.bingApiUrl, model, paramsBingImages, successBingImages, headers);
+        }
+
+        function paramsBingImages(model) {
+            return {
+                q: model.query,
+                count: _.min([model.take, 150]),
+                offset: _.max([model.skip, 0])
+            };
+        }
+
+        function successBingImages(response) {
+            var i;
+            var model = {};
+            var resp = response.data;
+            var itemsCount = 0;
+
+            model.imageItems = [];
+            if (commonFactory.isArrayNotNull(resp.value)) {
+                itemsCount = resp.value.length;
+                for (i = 0; i < itemsCount; i++) {
+                    var iter = resp.value[i];
+
+                    model.imageItems.push({
+                        link: iter.contentUrl,
+                        title: iter.name
+                    });
+                }
+            }
+
+            model.totalCount = commonFactory.isNumber(resp.totalEstimatedMatches)
+                ? resp.totalEstimatedMatches.toString()
+                : itemsCount.toString();
 
             return model;
         }
