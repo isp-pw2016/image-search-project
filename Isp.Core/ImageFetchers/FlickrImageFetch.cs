@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using Isp.Core.Configs;
 using Isp.Core.Entities;
 using Isp.Core.Entities.Jsons.Flickr;
 using Isp.Core.Exceptions;
@@ -32,9 +32,6 @@ namespace Isp.Core.ImageFetchers
     public class FlickrImageFetch : ImageFetchBase
     {
         private const string _name = "Flickr Photos Search";
-        private readonly string _apiUrl = ConfigurationManager.AppSettings["FlickrApiUrl"];
-        private readonly string _apiKey = ConfigurationManager.AppSettings["FlickrApiKey"];
-        private readonly string _photoUrl = ConfigurationManager.AppSettings["FlickrPhotoUrl"];
 
         protected override async Task<ImageFetchResult> FetchImage(ImageFetchQuery model)
         {
@@ -46,7 +43,7 @@ namespace Isp.Core.ImageFetchers
 
             var requestParams = HttpUtility.ParseQueryString(string.Empty);
             requestParams["method"] = "flickr.photos.search";
-            requestParams["api_key"] = _apiKey;
+            requestParams["api_key"] = AppSetting.FlickrApiKey;
             requestParams["format"] = "json";
             requestParams["nojsoncallback"] = "1";
             requestParams["tags"] = tagsParam;
@@ -65,7 +62,7 @@ namespace Isp.Core.ImageFetchers
             string jsonString;
             using (var client = new HttpClient())
             {
-                var task = await client.GetAsync($"{_apiUrl}?{requestParams}");
+                var task = await client.GetAsync($"{AppSetting.FlickrApiUrl}?{requestParams}");
                 if (task?.Content == null)
                 {
                     throw new ImageFetchException("No response from the API", _name);
@@ -83,7 +80,7 @@ namespace Isp.Core.ImageFetchers
             {
                 ImageItems = search?.Photos?.Photo?.Select(i => new ImageItem
                 {
-                    Link = string.Format(_photoUrl, i.Farm, i.Server, i.Id, i.Secret),
+                    Link = string.Format(AppSetting.FlickrPhotoUrl, i.Farm, i.Server, i.Id, i.Secret),
                     Title = i.Title
                 }),
                 TotalCount = search?.Photos?.Total.TryToInt64()

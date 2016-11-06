@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using Isp.Core.Configs;
 using Isp.Core.Entities;
 using Isp.Core.Entities.Jsons.Bing;
 using Isp.Core.Exceptions;
@@ -25,8 +25,6 @@ namespace Isp.Core.ImageFetchers
     public class BingImageFetch : ImageFetchBase
     {
         private const string _name = "Bing Image Search";
-        private readonly string _apiUrl = ConfigurationManager.AppSettings["BingSearchApiUrl"];
-        private readonly string _apiKey = ConfigurationManager.AppSettings["BingSearchApiKey"];
 
         protected override async Task<ImageFetchResult> FetchImage(ImageFetchQuery model)
         {
@@ -46,9 +44,9 @@ namespace Isp.Core.ImageFetchers
             string jsonString;
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", _apiKey);
+                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", AppSetting.BingApiKey);
 
-                var task = await client.GetAsync($"{_apiUrl}?{requestParams}");
+                var task = await client.GetAsync($"{AppSetting.BingApiUrl}?{requestParams}");
                 if (task == null)
                 {
                     throw new ImageFetchException("No response from the API", _name);

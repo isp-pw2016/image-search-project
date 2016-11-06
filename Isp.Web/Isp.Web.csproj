@@ -146,7 +146,7 @@
     <Content Include="Angular\Controllers\home.controller.js" />
     <Content Include="Angular\Directives\image-fetch.directive.js" />
     <Content Include="Angular\Factories\common.factory.js" />
-    <Content Include="Angular\Services\home.service.js" />
+    <Content Include="Angular\Services\server.service.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -172,11 +172,16 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Content\toaster.scss" />
+    <Content Include="Angular\Services\client.service.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\lodash.core.js" />
+    <Content Include="Scripts\lodash.core.min.js" />
+    <Content Include="Scripts\lodash.js" />
+    <Content Include="Scripts\lodash.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />

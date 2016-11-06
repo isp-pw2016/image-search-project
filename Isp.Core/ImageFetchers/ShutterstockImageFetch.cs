@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Isp.Core.Configs;
 using Isp.Core.Entities;
 using Isp.Core.Entities.Jsons.Shutterstock;
 using Isp.Core.Exceptions;
@@ -31,9 +31,6 @@ namespace Isp.Core.ImageFetchers
     public class ShutterstockImageFetch : ImageFetchBase
     {
         private const string _name = "Shutterstock Image Search";
-        private readonly string _apiUrl = ConfigurationManager.AppSettings["ShutterstockApiUrl"];
-        private readonly string _clientId = ConfigurationManager.AppSettings["ShutterstockClientId"];
-        private readonly string _clientSecret = ConfigurationManager.AppSettings["ShutterstockClientSecret"];
 
         protected override async Task<ImageFetchResult> FetchImage(ImageFetchQuery model)
         {
@@ -60,12 +57,15 @@ namespace Isp.Core.ImageFetchers
             string jsonString;
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_clientId}:{_clientSecret}"));
+                var credentials =
+                    Convert.ToBase64String(
+                        Encoding.ASCII.GetBytes(
+                            $"{AppSetting.ShutterstockClientId}:{AppSetting.ShutterstockClientSecret}"));
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
                 client.DefaultRequestHeaders.Add("User-Agent", "ISP");
 
-                var task = await client.GetByteArrayAsync($"{_apiUrl}?{requestParams}");
+                var task = await client.GetByteArrayAsync($"{AppSetting.ShutterstockApiUrl}?{requestParams}");
                 if (task == null)
                 {
                     throw new ImageFetchException("No response from the API", _name);

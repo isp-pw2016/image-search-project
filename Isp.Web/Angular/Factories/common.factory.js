@@ -16,6 +16,7 @@
             isStringNotNull: isStringNotNull,
             isBool: isBool,
             isNumber: isNumber,
+            isArrayNotNull: isArrayNotNull,
             requestSuccess: requestSuccess,
             requestFailure: requestFailure
         };
@@ -58,6 +59,10 @@
 
         function isNumber(arg) {
             return typeof arg === 'number';
+        }
+
+        function isArrayNotNull(arg) {
+            return !!arg && arg.constructor === Array && arg.length > 0;
         }
 
         function requestSuccess(response) {

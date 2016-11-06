@@ -5,13 +5,14 @@
         .module('app')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$q', 'homeService', 'commonFactory'];
+    HomeController.$inject = ['$q', 'clientService', 'serverService', 'commonFactory'];
 
-    function HomeController($q, homeService, commonFactory) {
+    function HomeController($q, clientService, serverService, commonFactory) {
         var vm = this;
 
         vm.model = {};
-        vm.results = {};
+        vm.clientResults = {};
+        vm.serverResults = {};
         vm.isBusy = false;
         vm.isInitialised = false;
         vm.startProcedure = startProcedure;
@@ -33,15 +34,18 @@
             vm.model.skip = 0;
             vm.model.take = 10;
 
-            var googlePromise = homeService.getGoogleImages(vm.model);
-            var bingPromise = homeService.getBingImages(vm.model);
-            var instagramPromise = homeService.getInstagramImages(vm.model);
-            var flickrPromise = homeService.getFlickrImages(vm.model);
-            var shutterstockPromise = homeService.getShutterstockImages(vm.model);
+            var googleServerPromise = serverService.getGoogleImages(vm.model);
+            var bingServerPromise = serverService.getBingImages(vm.model);
+            var instagramServerPromise = serverService.getInstagramImages(vm.model);
+            var flickrServerPromise = serverService.getFlickrImages(vm.model);
+            var shutterstockServerPromise = serverService.getShutterstockImages(vm.model);
 
-            $q.all([googlePromise, bingPromise, instagramPromise, flickrPromise, shutterstockPromise])
+            $q.all([
+                    googleServerPromise, bingServerPromise, instagramServerPromise, flickrServerPromise,
+                    shutterstockServerPromise
+                ])
                 .then(function(responses) {
-                    vm.results = {
+                    vm.serverResults = {
                         google: responses[0],
                         bing: responses[1],
                         instagram: responses[2],

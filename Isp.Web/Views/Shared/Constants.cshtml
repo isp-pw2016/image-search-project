@@ -1,4 +1,5 @@
-﻿@using Isp.Core.Entities
+﻿@using Isp.Core.Configs
+@using Isp.Core.Entities
 @using Isp.Core.Extensions
 @using Isp.Web.Extensions
 @{
@@ -13,6 +14,11 @@
                 'instagram': '@ImageFetchHandler.Instagram.ToLong()',
                 'flickr': '@ImageFetchHandler.Flickr.ToLong()',
                 'shutterstock': '@ImageFetchHandler.Shutterstock.ToLong()'
+            },
+            'configs': {
+                'googleApiUrl': '@AppSetting.GoogleApiUrl',
+                'googleApiKey': '@AppSetting.GoogleApiKey',
+                'googleEngineId': '@AppSetting.GoogleEngineId'
             }
         };
     </script>

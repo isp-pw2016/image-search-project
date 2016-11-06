@@ -16,6 +16,9 @@ namespace Isp.Web
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/lodash").Include(
+                "~/Scripts/lodash.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
                 "~/Scripts/angular.js",
                 "~/Scripts/toaster.js",
@@ -23,7 +26,8 @@ namespace Isp.Web
                 "~/Angular/Controllers/home.controller.js",
                 "~/Angular/Directives/image-fetch.directive.js",
                 "~/Angular/Factories/common.factory.js",
-                "~/Angular/Services/home.service.js"));
+                "~/Angular/Services/client.service.js",
+                "~/Angular/Services/server.service.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",

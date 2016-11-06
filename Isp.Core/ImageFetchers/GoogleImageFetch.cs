@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using Google.Apis.Customsearch.v1;
 using Google.Apis.Customsearch.v1.Data;
 using Google.Apis.Services;
+using Isp.Core.Configs;
 using Isp.Core.Entities;
 using Isp.Core.Exceptions;
 
@@ -30,15 +30,13 @@ namespace Isp.Core.ImageFetchers
     public class GoogleImageFetch : ImageFetchBase
     {
         private const string _name = "Google Custom Search";
-        private readonly string _apiKey = ConfigurationManager.AppSettings["GoogleCustomSearchApiKey"];
-        private readonly string _engineId = ConfigurationManager.AppSettings["GoogleCustomSearchEngineId"];
 
         protected override async Task<ImageFetchResult> FetchImage(ImageFetchQuery model)
         {
-            var service = new CustomsearchService(new BaseClientService.Initializer {ApiKey = _apiKey});
+            var service = new CustomsearchService(new BaseClientService.Initializer {ApiKey = AppSetting.GoogleApiKey});
             var request = service.Cse.List(model.Query);
 
-            request.Cx = _engineId;
+            request.Cx = AppSetting.GoogleEngineId;
             request.SearchType = CseResource.ListRequest.SearchTypeEnum.Image;
             request.Fields = "items(link,title),searchInformation";
 

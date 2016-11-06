@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configs\AppSetting.cs" />
     <Compile Include="Entities\BenchmarkResult.cs" />
     <Compile Include="Entities\ImageFetchHandler.cs" />
     <Compile Include="Entities\ImageFetchResult.cs" />

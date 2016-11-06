@@ -1,8 +1,8 @@
-﻿using System.Configuration;
-using System.Linq;
+﻿using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using Isp.Core.Configs;
 using Isp.Core.Entities;
 using Isp.Core.Entities.Jsons.Instagram;
 using Isp.Core.Exceptions;
@@ -34,8 +34,6 @@ namespace Isp.Core.ImageFetchers
     public class InstagramImageFetch : ImageFetchBase
     {
         private const string _name = "Instagram Tag";
-        private readonly string _apiUrl = ConfigurationManager.AppSettings["InstagramApiUrl"];
-        private readonly string _accessToken = ConfigurationManager.AppSettings["InstagramAccessToken"];
 
         protected override async Task<ImageFetchResult> FetchImage(ImageFetchQuery model)
         {
@@ -50,14 +48,14 @@ namespace Isp.Core.ImageFetchers
             }
 
             var requestParams = HttpUtility.ParseQueryString(string.Empty);
-            requestParams["access_token"] = _accessToken;
+            requestParams["access_token"] = AppSetting.InstagramAccessToken;
 
             if (model.Take.HasValue)
             {
                 requestParams["count"] = model.Take.Value.ToString();
             }
 
-            var apiUrlWithTag = string.Format(_apiUrl, singleTag);
+            var apiUrlWithTag = string.Format(AppSetting.InstagramApiUrl, singleTag);
 
             string jsonString;
             using (var client = new HttpClient())

@@ -3,11 +3,11 @@
 
     angular
         .module('app')
-        .service('homeService', homeService);
+        .service('serverService', serverService);
 
-    homeService.inject = ['$http', '$q', '$window', 'commonFactory'];
+    serverService.inject = ['$http', '$q', '$window', 'commonFactory'];
 
-    function homeService($http, $q, $window, commonFactory) {
+    function serverService($http, $q, $window, commonFactory) {
         var paths = $window.constants.paths;
         var enums = $window.constants.enums;
 
