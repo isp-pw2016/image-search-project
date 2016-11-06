@@ -14,6 +14,7 @@
             getGoogleImages: getGoogleImages,
             getBingImages: getBingImages,
             getInstagramImages: getInstagramImages,
+            getFlickrImages: getFlickrImages,
             getShutterstockImages: getShutterstockImages
         };
 
@@ -141,6 +142,7 @@
             if (commonFactory.isArrayNotNull(resp.data)) {
                 for (i = 0; i < resp.data.length; i++) {
                     var iter = resp.data[i];
+
                     var link = commonFactory.isObject(iter.images)
                         && commonFactory.isObject(iter.images.standard_resolution)
                         ? iter.images.standard_resolution.url
@@ -155,6 +157,71 @@
             }
 
             model.totalCount = '?';
+
+            return model;
+        }
+
+        ////////////////////
+
+        function getFlickrImages(model) {
+            var headers = {
+                'X-Requested-With': undefined
+            };
+
+            return getImages(configs.flickrApiUrl, model, paramsFlickrImages, successFlickrImages, headers);
+        }
+
+        function paramsFlickrImages(model) {
+            var trimmed = _.trim(model.query);
+            var tagsArr = _.split(trimmed, ' ', 20);
+            var tags = _.join(tagsArr, ',');
+
+            return {
+                method: 'flickr.photos.search',
+                api_key: configs.flickrApiKey,
+                format: 'json',
+                nojsoncallback: '1',
+                tags: tags,
+                sort: 'relevance',
+                per_page: _.min([model.take, 500]),
+                page: _.max([model.skip, 1])
+            };
+        }
+
+        function successFlickrImages(response) {
+            var i;
+            var model = {};
+            var resp = response.data;
+            var itemsCount = 0;
+
+            model.imageItems = [];
+
+            if (!commonFactory.isObject(resp.photos)) {
+                model.totalCount = '0';
+                return model;
+            }
+
+            if (commonFactory.isArrayNotNull(resp.photos.photo)) {
+                itemsCount = resp.photos.photo.length;
+                for (i = 0; i < itemsCount; i++) {
+                    var iter = resp.photos.photo[i];
+
+                    var link = configs.flickrPhotoUrl;
+                    link = _.replace(link, '{0}', iter.farm);
+                    link = _.replace(link, '{1}', iter.server);
+                    link = _.replace(link, '{2}', iter.id);
+                    link = _.replace(link, '{3}', iter.secret);
+
+                    model.imageItems.push({
+                        link: link,
+                        title: iter.title
+                    });
+                }
+            }
+
+            model.totalCount = commonFactory.isStringNotNull(resp.photos.total)
+                ? resp.photos.total
+                : itemsCount.toString();
 
             return model;
         }
