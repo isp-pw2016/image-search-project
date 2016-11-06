@@ -57,10 +57,7 @@ namespace Isp.Core.ImageFetchers
             string jsonString;
             using (var client = new HttpClient())
             {
-                var credentials =
-                    Convert.ToBase64String(
-                        Encoding.ASCII.GetBytes(
-                            $"{AppSetting.ShutterstockClientId}:{AppSetting.ShutterstockClientSecret}"));
+                var credentials = AppSetting.ShutterstockCredentials;
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
                 client.DefaultRequestHeaders.Add("User-Agent", "ISP");

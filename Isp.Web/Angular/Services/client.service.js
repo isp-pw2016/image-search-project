@@ -11,7 +11,8 @@
         var configs = $window.constants.configs;
 
         var service = {
-            getGoogleImages: getGoogleImages
+            getGoogleImages: getGoogleImages,
+            getShutterstockImages: getShutterstockImages
         };
 
         return service;
@@ -68,10 +69,58 @@
 
         ////////////////////
 
+        function getShutterstockImages(model) {
+            var headers = {
+                'Authorization': 'Basic ' + configs.shutterstockCredentials,
+                'X-Requested-With': undefined
+            };
+
+            return getImages(configs.shutterstockApiUrl, model, paramsShutterstockImages, successShutterstockImages,
+                headers);
+        }
+
+        function paramsShutterstockImages(model) {
+            return {
+                query: model.query,
+                sort: 'relevance',
+                license: ['commercial', 'editorial', 'enhanced', 'sensitive', 'NOT enhanced', 'NOT sensitive'],
+                page: _.max([model.skip, 1]),
+                per_page: _.min([model.take, 500])
+            };
+        }
+
+        function successShutterstockImages(response) {
+            var i;
+            var model = {};
+            var resp = response.data;
+            var itemsCount = 0;
+
+            model.imageItems = [];
+            if (commonFactory.isArrayNotNull(resp.data)) {
+                itemsCount = resp.data.length;
+                for (i = 0; i < itemsCount; i++) {
+                    var iter = resp.data[i];
+                    var link = commonFactory.isObject(iter.assets) && commonFactory.isObject(iter.assets.preview)
+                        ? iter.assets.preview.url
+                        : null;
+
+                    model.imageItems.push({
+                        link: link,
+                        title: iter.description
+                    });
+                }
+            }
+
+            model.totalCount = commonFactory.isNumber(resp.totalCount)
+                ? resp.totalCount.toString()
+                : itemsCount.toString();
+
+            return model;
+        }
 
         ////////////////////
 
-        function getImages(apiUrl, model, requestParams, requestSuccess) {
+        function getImages(apiUrl, model, requestParams, requestSuccess, headers) {
             var start = performance.now();
 
             if (!commonFactory.isStringNotNull(apiUrl)
@@ -83,7 +132,10 @@
 
             var params = requestParams(model);
 
-            return $http.get(apiUrl, { params: params })
+            return $http.get(apiUrl, {
+                    params: params,
+                    headers: headers
+                })
                 .then(function(resp) {
                     var respParsed = requestSuccess(resp);
                     var stop = performance.now();

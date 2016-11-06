@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
+using System.Text;
 
 namespace Isp.Core.Configs
 {
@@ -21,5 +23,9 @@ namespace Isp.Core.Configs
         public static readonly string ShutterstockApiUrl = ConfigurationManager.AppSettings["ShutterstockApiUrl"];
         public static readonly string ShutterstockClientId = ConfigurationManager.AppSettings["ShutterstockClientId"];
         public static readonly string ShutterstockClientSecret = ConfigurationManager.AppSettings["ShutterstockClientSecret"];
+
+        public static readonly string ShutterstockCredentials
+            = Convert.ToBase64String(Encoding.ASCII.GetBytes(
+                $"{ShutterstockClientId}:{ShutterstockClientSecret}"));
     }
 }
