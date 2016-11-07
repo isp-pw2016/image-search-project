@@ -1,7 +1,7 @@
 ﻿<div ng-controller="HomeController as vm">
     <form ng-submit="vm.startProcedure()">
         <div class="row">
-            <div class="col-lg-12 m-b-60">
+            <div class="col-md-12">
                 <div class="input-group input-group-lg">
                     <input ng-model="vm.model.query" type="text" class="form-control" placeholder="Search for images...">
                     <span class="input-group-btn">
@@ -13,33 +13,73 @@
             </div>
         </div>
     </form>
-
-    <div class="row loader-wrapper">
+    
+    <div class="loader-wrapper">
         <div ng-if="vm.isBusy" class="loader-overlay">
             <div class="loader"></div>
         </div>
         
-        <div ng-if="vm.isInitialised">
-            <image-fetch name="Google Custom Search API v1"
-                         server="vm.google.server"
-                         client="vm.google.client"></image-fetch>
+        <div ng-if="vm.benchmarkCount > 0">
+            <div class="row m-t-30">
+                <div class="col-md-12">
+                    <div class="alert alert-info" role="alert">
+                        <div class="row">
+                            <div class="col-md-9 p-t-7">
+                                Total count of
+                                <b><span ng-bind="vm.benchmarkCount"></span></b>
+                                tests performed
+                            </div>
+                            <div class="col-md-3 text-right">
+                                <button type="button" ng-click="vm.chart()" class="btn btn-default">
+                                    Generate the chart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-           *<image-fetch name="Bing Image Search API v5"
-                         server="vm.bing.server"
-                         client="vm.bing.client"></image-fetch>
+            <div ng-if="vm.chartIsInitialised">
+                <div class="row m-t-15">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Benchmark chart
+                            </div>
+                            <div class="panel-body">
+                                <canvas id="bar" class="chart chart-bar"
+                                        chart-data="vm.chartData" chart-labels="vm.chartLabels"
+                                        chart-series="vm.chartSeries" chart-options="vm.chartOptions"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <image-fetch name="Instagram Tag API v1"
-                         server="vm.instagram.server"
-                         client="vm.instagram.client"></image-fetch>
+        <div class="row">
+            <div ng-if="vm.isInitialised" class="m-t-30">
+                <image-fetch name="Google Custom Search API v1"
+                             server="vm.google.server"
+                             client="vm.google.client"></image-fetch>
 
-            <image-fetch name="Flickr Photos Search API v1"
-                         server="vm.flickr.server"
-                         client="vm.flickr.client"></image-fetch>
+                <image-fetch name="Bing Image Search API v5"
+                             server="vm.bing.server"
+                             client="vm.bing.client"></image-fetch>
 
-            <image-fetch name="Shutterstock Image API v2"
-                         server="vm.shutterstock.server"
-                         client="vm.shutterstock.client"
-                         margin-after="false"></image-fetch>
+                <image-fetch name="Instagram Tag API v1"
+                             server="vm.instagram.server"
+                             client="vm.instagram.client"></image-fetch>
+
+                <image-fetch name="Flickr Photos Search API v1"
+                             server="vm.flickr.server"
+                             client="vm.flickr.client"></image-fetch>
+
+                <image-fetch name="Shutterstock Image API v2"
+                             server="vm.shutterstock.server"
+                             client="vm.shutterstock.client"
+                             margin-after="false"></image-fetch>
+            </div>
         </div>
     </div>
 

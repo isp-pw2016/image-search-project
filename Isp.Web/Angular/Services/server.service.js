@@ -16,7 +16,8 @@
             getBingImages: getBingImages,
             getInstagramImages: getInstagramImages,
             getFlickrImages: getFlickrImages,
-            getShutterstockImages: getShutterstockImages
+            getShutterstockImages: getShutterstockImages,
+            getMedian: getMedian
         };
 
         return service;
@@ -41,6 +42,29 @@
 
         function getShutterstockImages(model) {
             return getImages(enums.shutterstock, model);
+        }
+
+        function getMedian(time) {
+            if (!commonFactory.isArrayNotNull(time)) {
+                $q.reject();
+            }
+
+            var params = paths.getMedian + '?';
+            for (var i = 0; i < time.length; i++) {
+                var iter = time[i];
+
+                if (isNaN(iter)) {
+                    $q.reject();
+                }
+
+                if (i > 0) {
+                    params += '&';
+                }
+
+                params = params.concat('time=', iter.toString());
+            }
+
+            return $http.get(params).then(requestSuccess, requestFailure);
         }
 
         ////////////////////

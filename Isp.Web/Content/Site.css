@@ -94,9 +94,17 @@
     top: 0;
     left: 0;
     background-color: #fff;
-    filter: alpha(opacity=85);
-    opacity: 0.85;
+    filter: alpha(opacity=70);
+    opacity: 0.70;
     z-index: 1000;
+}
+
+.m-t-30 {
+    margin-top: 30px !important;
+}
+
+.m-t-60 {
+    margin-top: 60px !important;
 }
 
 .m-b-60 {
@@ -106,6 +114,10 @@
 .m-lr-0 {
     margin-left: 0 !important;
     margin-right: 0 !important;
+}
+
+.p-t-7 {
+    padding-top: 7px !important;
 }
 
 .p-b-5 {

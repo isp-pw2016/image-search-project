@@ -3,7 +3,8 @@
 
     angular
         .module('app', [
-            'toaster'
+            'toaster',
+            'chart.js'
         ])
         .config([
             '$httpProvider', function($httpProvider) {

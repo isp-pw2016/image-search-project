@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Isp.Core.Entities;
+using Isp.Core.Helpers;
 using Isp.Core.ImageFetchers;
 using Isp.Web.Serializers;
 
@@ -66,6 +67,17 @@ namespace Isp.Web.Controllers
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            return new JsonNetResult(result);
+        }
+
+        [HttpGet]
+        public ActionResult GetMedian(double[] time)
+        {
+            var result = new MedianResult
+            {
+                Median = time.Median()
+            };
 
             return new JsonNetResult(result);
         }

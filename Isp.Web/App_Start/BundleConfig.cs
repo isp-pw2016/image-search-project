@@ -19,9 +19,13 @@ namespace Isp.Web
             bundles.Add(new ScriptBundle("~/bundles/lodash").Include(
                 "~/Scripts/lodash.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/chartjs").Include(
+                "~/Scripts/Chart.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
                 "~/Scripts/angular.js",
                 "~/Scripts/toaster.js",
+                "~/Scripts/angular-chart.js",
                 "~/Angular/app.module.js",
                 "~/Angular/Controllers/home.controller.js",
                 "~/Angular/Directives/image-fetch.directive.js",

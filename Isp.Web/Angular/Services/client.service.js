@@ -311,7 +311,7 @@
 
             var objTimeString = '';
             if (commonFactory.isNumber(obj.time)) {
-                var millis = _.round(obj.time * 1000, 6);
+                var millis = _.round(obj.time * 1000, 3);
                 objTimeString = millis.toString() + 'ms';
             }
 
@@ -322,8 +322,8 @@
                     time: obj.time,
                     timeString: objTimeString
                 },
-                time: _.round(time / 1000, 6),
-                timeString: _.round(time, 6).toString() + ' ms'
+                time: _.round(time / 1000, 9),
+                timeString: _.round(time, 3).toString() + ' ms'
             };
         }
 

@@ -11,7 +11,7 @@ namespace Isp.Core.Entities
         [JsonIgnore]
         public double Stopwatch { get; set; }
 
-        public double Time => Math.Round(Stopwatch, 6);
+        public double Time => Math.Round(Stopwatch, 9);
 
         public string TimeString => Time.ToTimeString();
     }
