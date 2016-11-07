@@ -1,33 +1,74 @@
-﻿<div class="panel panel-default m-lr-15" ng-class="{ 'm-b-60': vm.marginAfter }">
-    <div class="panel-heading">
-        <div>
-            <strong>
-                <span ng-bind="::vm.name"></span>
-            </strong>
-        </div>
-        <div>
-            Total results:
-            <span ng-bind="vm.data.imageFetch.totalCount"></span>
-        </div>
-        <div>
-            Request time:
-            <span ng-bind="vm.data.timeString"></span>
-            <span ng-bind="vm.data.time"></span>
-        </div>
-        <div>
-            Self-reported search time:
-            <span ng-bind="vm.data.imageFetch.timeString"></span>
-            <span ng-bind="vm.data.imageFetch.time"></span>
+﻿<div class="row m-lr-0" ng-class="{ 'm-b-60': vm.marginAfter }">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div>
+                    <strong>
+                        <span ng-bind="::vm.name"></span>
+                        (server side)
+                    </strong>
+                </div>
+                <div>
+                    Total results:
+                    <span ng-bind="vm.server.imageFetch.totalCount"></span>
+                </div>
+                <div>
+                    Request time:
+                    <span ng-bind="vm.server.timeString"></span>
+                    <span ng-bind="vm.server.time"></span>
+                </div>
+                <div>
+                    Self-reported search time:
+                    <span ng-bind="vm.server.imageFetch.timeString"></span>
+                    <span ng-bind="vm.server.imageFetch.time"></span>
+                </div>
+            </div>
+            <div class="panel-body p-b-5">
+                <p ng-if="vm.server.imageFetch.totalCount === '0'">
+                    No images found.
+                </p>
+                <div ng-repeat="image in vm.server.imageFetch.imageItems" class="col-lg-6 col-md-6 col-xs-12 thumb">
+                    <a class="thumbnail" href="{{::image.link}}" target="_blank">
+                        <img class="img-responsive" ng-src="{{::image.link}}" title="{{::image.title}}">
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="panel-body p-b-5">
-        <p ng-if="vm.data.imageFetch.totalCount === '0'">
-            No images found.
-        </p>
-        <div ng-repeat="image in vm.data.imageFetch.imageItems" class="col-lg-3 col-md-4 col-xs-12 thumb">
-            <a class="thumbnail" href="{{::image.link}}" target="_blank">
-                <img class="img-responsive" ng-src="{{::image.link}}" title="{{::image.title}}">
-            </a>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div>
+                    <strong>
+                        <span ng-bind="::vm.name"></span>
+                        (client side)
+                    </strong>
+                </div>
+                <div>
+                    Total results:
+                    <span ng-bind="vm.client.imageFetch.totalCount"></span>
+                </div>
+                <div>
+                    Request time:
+                    <span ng-bind="vm.client.timeString"></span>
+                    <span ng-bind="vm.client.time"></span>
+                </div>
+                <div>
+                    Self-reported search time:
+                    <span ng-bind="vm.client.imageFetch.timeString"></span>
+                    <span ng-bind="vm.client.imageFetch.time"></span>
+                </div>
+            </div>
+            <div class="panel-body p-b-5">
+                <p ng-if="vm.client.imageFetch.totalCount === '0'">
+                    No images found.
+                </p>
+                <div ng-repeat="image in vm.client.imageFetch.imageItems" class="col-lg-6 col-md-6 col-xs-12 thumb">
+                    <a class="thumbnail" href="{{::image.link}}" target="_blank">
+                        <img class="img-responsive" ng-src="{{::image.link}}" title="{{::image.title}}">
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -14,7 +14,8 @@
             scope: {},
             bindToController: {
                 name: '@',
-                data: '=',
+                server: '=',
+                client: '=',
                 marginAfter: '=?'
             }
         };
@@ -29,18 +30,22 @@
 
         vm.marginAfter = commonFactory.isBool(vm.marginAfter) ? vm.marginAfter : true;
 
-        $scope.$watch('vm.data', function() {
-            parse();
+        $scope.$watch('vm.server', function() {
+            parse(vm.server);
+        });
+
+        $scope.$watch('vm.client', function () {
+            parse(vm.client);
         });
 
         ////////////////////
 
-        function parse() {
-            if (commonFactory.isObject(vm.data)) {
-                timeToString(vm.data);
+        function parse(obj) {
+            if (commonFactory.isObject(obj)) {
+                timeToString(obj);
 
-                if (commonFactory.isObject(vm.data.imageFetch)) {
-                    timeToString(vm.data.imageFetch);
+                if (commonFactory.isObject(obj.imageFetch)) {
+                    timeToString(obj.imageFetch);
                 }
             }
         }

@@ -20,20 +20,25 @@
         </div>
         
         <div ng-if="vm.isInitialised">
-            <image-fetch name="Google Custom Search API v1 (server side)"
-                         data="vm.serverResults.google"></image-fetch>
-            
-            <image-fetch name="Bing Image Search API v5 (server side)"
-                         data="vm.serverResults.bing"></image-fetch>
+            <image-fetch name="Google Custom Search API v1"
+                         server="vm.google.server"
+                         client="vm.google.client"></image-fetch>
 
-            <image-fetch name="Instagram Tag API v1 (server side)"
-                         data="vm.serverResults.instagram"></image-fetch>
-            
-            <image-fetch name="Flickr Photos Search API v1 (server side)"
-                         data="vm.serverResults.flickr"></image-fetch>
-            
-            <image-fetch name="Shutterstock Image API v2 (server side)"
-                         data="vm.serverResults.shutterstock"
+           *<image-fetch name="Bing Image Search API v5"
+                         server="vm.bing.server"
+                         client="vm.bing.client"></image-fetch>
+
+            <image-fetch name="Instagram Tag API v1"
+                         server="vm.instagram.server"
+                         client="vm.instagram.client"></image-fetch>
+
+            <image-fetch name="Flickr Photos Search API v1"
+                         server="vm.flickr.server"
+                         client="vm.flickr.client"></image-fetch>
+
+            <image-fetch name="Shutterstock Image API v2"
+                         server="vm.shutterstock.server"
+                         client="vm.shutterstock.client"
                          margin-after="false"></image-fetch>
         </div>
     </div>
