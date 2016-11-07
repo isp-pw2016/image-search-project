@@ -307,7 +307,7 @@
         }
 
         function requestResponse(obj, start, stop) {
-            var time = _.round(stop - start, 6);
+            var time = _.round((stop - start) / 1000, 6);
 
             var objTimeString = '';
             if (commonFactory.isNumber(obj.time)) {
