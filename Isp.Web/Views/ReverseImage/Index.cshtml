@@ -1,0 +1,18 @@
+﻿<div ng-controller="ReverseImageController as vm">
+    <form>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-lg btn-primary btn-block" ngf-select="vm.uploadImage($file)"
+                        ngf-pattern="'image/*'" ngf-accept="'image/*'">Select the image</button>
+            </div>
+        </div>
+    </form>
+    
+    <div class="loader-wrapper">
+        <div ng-if="vm.isBusy" class="loader-overlay">
+            <div class="loader"></div>
+        </div>
+    </div>
+    
+    <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'limit': 5}"></toaster-container>
+</div>

@@ -29,6 +29,19 @@ namespace Isp.Web.Serializers
             Formatting = Formatting.Indented;
         }
 
+        public JsonNetResult(string data)
+        {
+            Data = new
+            {
+                Message = data
+            };
+            SerializerSettings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
+            Formatting = Formatting.Indented;
+        }
+
         public override void ExecuteResult(ControllerContext context)
         {
             if (context == null)

@@ -4,7 +4,8 @@
     angular
         .module('app', [
             'toaster',
-            'chart.js'
+            'chart.js',
+            'ngFileUpload'
         ])
         .config([
             '$httpProvider', function($httpProvider) {

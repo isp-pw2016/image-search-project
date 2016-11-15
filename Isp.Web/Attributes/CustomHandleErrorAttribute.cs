@@ -34,7 +34,7 @@ namespace Isp.Web.Attributes
             if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
                 var title = string.Empty;
-                var message = filterContext.Exception.Message;
+                var message = filterContext.Exception?.Message;
 
                 if (filterContext.Exception is ImageFetchException)
                 {

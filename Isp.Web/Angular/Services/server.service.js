@@ -5,9 +5,9 @@
         .module('app')
         .service('serverService', serverService);
 
-    serverService.inject = ['$http', '$q', '$window', 'commonFactory'];
+    serverService.inject = ['$http', '$q', '$window', 'commonFactory', 'Upload'];
 
-    function serverService($http, $q, $window, commonFactory) {
+    function serverService($http, $q, $window, commonFactory, Upload) {
         var paths = $window.constants.paths;
         var enums = $window.constants.enums;
 
@@ -17,7 +17,8 @@
             getInstagramImages: getInstagramImages,
             getFlickrImages: getFlickrImages,
             getShutterstockImages: getShutterstockImages,
-            getMedian: getMedian
+            getMedian: getMedian,
+            postImage: postImage
         };
 
         return service;
@@ -65,6 +66,14 @@
             }
 
             return $http.get(params).then(requestSuccess, requestFailure);
+        }
+
+        function postImage(file) {
+            return Upload.upload({
+                    url: paths.postImage,
+                    data: { file: file }
+                })
+                .then(requestSuccess, requestFailure);
         }
 
         ////////////////////

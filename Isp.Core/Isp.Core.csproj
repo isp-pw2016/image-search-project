@@ -66,6 +66,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\ImageUploadResult.cs" />
     <Compile Include="Entities\MedianResult.cs" />
     <Compile Include="Helpers\MathHelpers.cs" />
     <Compile Include="Configs\AppSetting.cs" />
