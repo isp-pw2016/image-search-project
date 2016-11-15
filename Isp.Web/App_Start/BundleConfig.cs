@@ -31,6 +31,7 @@ namespace Isp.Web
                 "~/Angular/Controllers/home.controller.js",
                 "~/Angular/Controllers/reverse-image.controller.js",
                 "~/Angular/Directives/image-fetch.directive.js",
+                "~/Angular/Directives/reverse-image-fetch.directive.js",
                 "~/Angular/Factories/common.factory.js",
                 "~/Angular/Services/client.service.js",
                 "~/Angular/Services/server.service.js"));

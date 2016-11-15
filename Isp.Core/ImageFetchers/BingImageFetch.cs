@@ -7,6 +7,7 @@ using Isp.Core.Configs;
 using Isp.Core.Entities;
 using Isp.Core.Entities.Jsons.Bing;
 using Isp.Core.Exceptions;
+using Isp.Core.Helpers;
 
 namespace Isp.Core.ImageFetchers
 {
@@ -49,17 +50,17 @@ namespace Isp.Core.ImageFetchers
                 var task = await client.GetAsync($"{AppSetting.BingApiUrl}?{requestParams}");
                 if (task == null)
                 {
-                    throw new ImageFetchException("No response from the API", _name);
+                    throw new CustomException("No response from the API", _name);
                 }
 
                 jsonString = await task.Content.ReadAsStringAsync();
                 if (string.IsNullOrWhiteSpace(jsonString))
                 {
-                    throw new ImageFetchException("Error when reading the response from the API", _name);
+                    throw new CustomException("Error when reading the response from the API", _name);
                 }
             }
 
-            var search = JsonDeserialize<BingJson>(jsonString, _name);
+            var search = JsonHelpers.Deserialize<BingJson>(jsonString, _name);
             var result = new ImageFetchResult
             {
                 ImageItems = search?.Value?.Select(i => new ImageItem

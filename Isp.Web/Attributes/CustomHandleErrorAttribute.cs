@@ -36,9 +36,9 @@ namespace Isp.Web.Attributes
                 var title = string.Empty;
                 var message = filterContext.Exception?.Message;
 
-                if (filterContext.Exception is ImageFetchException)
+                if (filterContext.Exception is CustomException)
                 {
-                    title = ((ImageFetchException) filterContext.Exception).Title;
+                    title = ((CustomException) filterContext.Exception).Title;
                 }
 
                 filterContext.Result = new JsonNetResult(new

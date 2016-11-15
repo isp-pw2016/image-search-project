@@ -40,6 +40,8 @@
     </div>
     <div class="container container-overhead body-content">
         @RenderBody()
+        
+        <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'limit': 5}"></toaster-container>
     </div>
     
     @Html.Partial("Constants")

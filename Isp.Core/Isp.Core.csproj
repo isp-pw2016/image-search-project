@@ -68,6 +68,9 @@
   <ItemGroup>
     <Compile Include="Entities\ImageUploadResult.cs" />
     <Compile Include="Entities\MedianResult.cs" />
+    <Compile Include="Entities\ReverseImageFetchQuery.cs" />
+    <Compile Include="Entities\ReverseImageFetchResult.cs" />
+    <Compile Include="Helpers\JsonHelpers.cs" />
     <Compile Include="Helpers\MathHelpers.cs" />
     <Compile Include="Configs\AppSetting.cs" />
     <Compile Include="Entities\BenchmarkResult.cs" />
@@ -79,7 +82,7 @@
     <Compile Include="Entities\Jsons\Flickr\FlickrJson.cs" />
     <Compile Include="Entities\Jsons\Instagram\InstagramJson.cs" />
     <Compile Include="Entities\Jsons\Shutterstock\ShutterstockJson.cs" />
-    <Compile Include="Exceptions\ImageFetchException.cs" />
+    <Compile Include="Exceptions\CustomException.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
@@ -90,6 +93,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ImageFetchers\ImageFetchBase.cs" />
     <Compile Include="ImageFetchers\GoogleImageFetch.cs" />
+    <Compile Include="ReverseImageFetchers\BingReverseImageFetch.cs" />
+    <Compile Include="ReverseImageFetchers\ReverseImageFetchBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

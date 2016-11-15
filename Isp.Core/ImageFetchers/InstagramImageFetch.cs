@@ -6,6 +6,7 @@ using Isp.Core.Configs;
 using Isp.Core.Entities;
 using Isp.Core.Entities.Jsons.Instagram;
 using Isp.Core.Exceptions;
+using Isp.Core.Helpers;
 
 namespace Isp.Core.ImageFetchers
 {
@@ -44,7 +45,7 @@ namespace Isp.Core.ImageFetchers
 
             if (string.IsNullOrWhiteSpace(singleTag))
             {
-                throw new ImageFetchException("API requires a single tag", _name);
+                throw new CustomException("API requires a single tag", _name);
             }
 
             var requestParams = HttpUtility.ParseQueryString(string.Empty);
@@ -63,17 +64,17 @@ namespace Isp.Core.ImageFetchers
                 var task = await client.GetAsync($"{apiUrlWithTag}?{requestParams}");
                 if (task?.Content == null)
                 {
-                    throw new ImageFetchException("No response from the API", _name);
+                    throw new CustomException("No response from the API", _name);
                 }
 
                 jsonString = await task.Content.ReadAsStringAsync();
                 if (string.IsNullOrWhiteSpace(jsonString))
                 {
-                    throw new ImageFetchException("Error when reading the response from the API", _name);
+                    throw new CustomException("Error when reading the response from the API", _name);
                 }
             }
 
-            var search = JsonDeserialize<InstagramJson>(jsonString, _name);
+            var search = JsonHelpers.Deserialize<InstagramJson>(jsonString, _name);
             var result = new ImageFetchResult
             {
                 ImageItems = search?.Data?.Select(i => new ImageItem

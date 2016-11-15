@@ -6,6 +6,8 @@ namespace Isp.Core.Configs
 {
     public static class AppSetting
     {
+        public static readonly string UploadFolder = ConfigurationManager.AppSettings["UploadFolder"];
+
         public static readonly string GoogleApiUrl = ConfigurationManager.AppSettings["GoogleApiUrl"];
         public static readonly string GoogleApiKey = ConfigurationManager.AppSettings["GoogleApiKey"];
         public static readonly string GoogleEngineId = ConfigurationManager.AppSettings["GoogleEngineId"];

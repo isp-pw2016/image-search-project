@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Isp.Core.Entities;
-using Isp.Core.Exceptions;
-using Newtonsoft.Json;
 
 namespace Isp.Core.ImageFetchers
 {
@@ -31,31 +29,14 @@ namespace Isp.Core.ImageFetchers
             GC.Collect();
 
             stopwatch.Start();
-            var imageFetchResult = await FetchImage(model);
+            var result = await FetchImage(model);
             stopwatch.Stop();
 
             return new BenchmarkResult
             {
-                ImageFetch = imageFetchResult,
+                ImageFetch = result,
                 Stopwatch = stopwatch.ElapsedTicks / _stopwatchFrequency
             };
-        }
-
-        protected T JsonDeserialize<T>(string json, string name) where T : class
-        {
-            T model;
-            try
-            {
-                model = JsonConvert.DeserializeObject<T>(json);
-            }
-            catch (Exception ex)
-            {
-                throw new ImageFetchException(
-                    $"Error when deserializing the response from the API ({ex.Message})",
-                    name);
-            }
-
-            return model;
         }
     }
 }

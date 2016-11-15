@@ -2,21 +2,21 @@
 
 namespace Isp.Core.Exceptions
 {
-    public class ImageFetchException : Exception
+    public class CustomException : Exception
     {
         public string Title { get; set; }
 
-        public ImageFetchException()
+        public CustomException()
         {
         }
 
-        public ImageFetchException(string message, string title)
+        public CustomException(string message, string title)
             : base(message)
         {
             Title = title;
         }
 
-        public ImageFetchException(string message, string title, Exception inner)
+        public CustomException(string message, string title, Exception inner)
             : base(message, inner)
         {
             Title = title;

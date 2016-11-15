@@ -57,7 +57,7 @@ namespace Isp.Core.ImageFetchers
             }
             catch (Exception ex)
             {
-                throw new ImageFetchException($"Error when reading the response from the API: {ex.Message}", _name);
+                throw new CustomException($"Error when reading the response from the API: {ex.Message}", _name);
             }
 
             var result = new ImageFetchResult

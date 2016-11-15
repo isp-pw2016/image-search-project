@@ -2,8 +2,14 @@
     <form>
         <div class="row">
             <div class="col-md-12">
+                <input ng-model="vm.model.query" type="text" class="form-control input-lg" placeholder="Image description...">
+            </div>
+        </div>
+
+        <div class="row m-t-15">
+            <div class="col-md-12">
                 <button class="btn btn-lg btn-primary btn-block" ngf-select="vm.uploadImage($file)"
-                        ngf-pattern="'image/*'" ngf-accept="'image/*'">Select the image</button>
+                        ngf-pattern="'image/*'" ngf-accept="'image/*'">Upload the image</button>
             </div>
         </div>
     </form>
@@ -12,7 +18,39 @@
         <div ng-if="vm.isBusy" class="loader-overlay">
             <div class="loader"></div>
         </div>
+        
+        <div ng-if="vm.isFileUploaded">
+            <div class="row m-t-30">
+                <div class="col-md-12">
+                    <div class="alert alert-success" role="alert">
+                        <div class="row">
+                            <div class="col-md-9 p-t-7">
+                                Image uploaded successfully:
+                                <b><span ng-bind="vm.model.name"></span></b>
+                            </div>
+                            <div class="col-md-3 text-right">
+                                <button type="button" ng-click="vm.reverseImages(vm.model)" class="btn btn-default">
+                                    Find similar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div ng-if="vm.isInitialised">
+            <div class="row">
+                <div class="m-t-30">
+                    <reverse-image-fetch name="Bing Image Insights API v5"
+                                         model="vm.bing"
+                                         margin-after="false"></reverse-image-fetch>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'limit': 5}"></toaster-container>
 </div>
+
+<script type="text/ng-template" id="reverse-image-fetch.html">
+    @Html.Partial("Angular/ReverseImageFetchNg")
+</script>

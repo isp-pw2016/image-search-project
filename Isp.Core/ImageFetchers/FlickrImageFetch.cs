@@ -8,6 +8,7 @@ using Isp.Core.Entities;
 using Isp.Core.Entities.Jsons.Flickr;
 using Isp.Core.Exceptions;
 using Isp.Core.Extensions;
+using Isp.Core.Helpers;
 
 namespace Isp.Core.ImageFetchers
 {
@@ -65,17 +66,17 @@ namespace Isp.Core.ImageFetchers
                 var task = await client.GetAsync($"{AppSetting.FlickrApiUrl}?{requestParams}");
                 if (task?.Content == null)
                 {
-                    throw new ImageFetchException("No response from the API", _name);
+                    throw new CustomException("No response from the API", _name);
                 }
 
                 jsonString = await task.Content.ReadAsStringAsync();
                 if (string.IsNullOrWhiteSpace(jsonString))
                 {
-                    throw new ImageFetchException("Error when reading the response from the API", _name);
+                    throw new CustomException("Error when reading the response from the API", _name);
                 }
             }
 
-            var search = JsonDeserialize<FlickrJson>(jsonString, _name);
+            var search = JsonHelpers.Deserialize<FlickrJson>(jsonString, _name);
             var result = new ImageFetchResult
             {
                 ImageItems = search?.Photos?.Photo?.Select(i => new ImageItem

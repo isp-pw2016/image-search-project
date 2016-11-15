@@ -9,6 +9,7 @@ using Isp.Core.Configs;
 using Isp.Core.Entities;
 using Isp.Core.Entities.Jsons.Shutterstock;
 using Isp.Core.Exceptions;
+using Isp.Core.Helpers;
 
 namespace Isp.Core.ImageFetchers
 {
@@ -65,13 +66,13 @@ namespace Isp.Core.ImageFetchers
                 var task = await client.GetByteArrayAsync($"{AppSetting.ShutterstockApiUrl}?{requestParams}");
                 if (task == null)
                 {
-                    throw new ImageFetchException("No response from the API", _name);
+                    throw new CustomException("No response from the API", _name);
                 }
 
                 jsonString = Encoding.UTF8.GetString(task);
             }
 
-            var search = JsonDeserialize<ShutterstockJson>(jsonString, _name);
+            var search = JsonHelpers.Deserialize<ShutterstockJson>(jsonString, _name);
             var result = new ImageFetchResult
             {
                 ImageItems = search?.Data?.Select(i => new ImageItem

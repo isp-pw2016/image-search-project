@@ -18,7 +18,8 @@
             getFlickrImages: getFlickrImages,
             getShutterstockImages: getShutterstockImages,
             getMedian: getMedian,
-            postImage: postImage
+            postImage: postImage,
+            getBingReverseImages: getBingReverseImages
         };
 
         return service;
@@ -76,6 +77,10 @@
                 .then(requestSuccess, requestFailure);
         }
 
+        function getBingReverseImages(model) {
+            return getReverseImages(enums.bing, model);
+        }
+
         ////////////////////
 
         function getImages(handler, model) {
@@ -83,10 +88,29 @@
                 $q.reject();
             }
 
-            return $http.get(paths.getImages, {
+            return $http.get(paths.getImages,
+                {
                     params: {
                         handler: handler,
                         query: model.query,
+                        skip: model.skip,
+                        take: model.take
+                    }
+                })
+                .then(requestSuccess, requestFailure);
+        }
+
+        function getReverseImages(handler, model) {
+            if (isNaN(handler) || !commonFactory.isObject(model)) {
+                $q.reject();
+            }
+
+            return $http.get(paths.getReverseImages,
+                {
+                    params: {
+                        handler: handler,
+                        query: model.query,
+                        fileName: model.fileName,
                         skip: model.skip,
                         take: model.take
                     }

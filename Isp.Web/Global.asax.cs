@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Isp.Core.ImageFetchers;
+using Isp.Core.ReverseImageFetchers;
 using Isp.Web.Serializers;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
@@ -46,6 +47,12 @@ namespace Isp.Web
             container.RegisterCollection<ImageFetchBase>(
                 from type in typeof(ImageFetchBase).Assembly.GetTypes()
                 where type.IsSubclassOf(typeof(ImageFetchBase))
+                select type);
+
+            // Register classes which inherit ReverseImageFetchBase
+            container.RegisterCollection<ReverseImageFetchBase>(
+                from type in typeof(ReverseImageFetchBase).Assembly.GetTypes()
+                where type.IsSubclassOf(typeof(ReverseImageFetchBase))
                 select type);
         }
     }
